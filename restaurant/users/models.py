@@ -1,3 +1,17 @@
 from django.db import models
 
-# Create your models here.
+
+class Manager():
+    pass
+
+
+class User():
+    pass
+
+
+class ManagerProfile():
+    pass
+
+
+class Profile():
+    pass
