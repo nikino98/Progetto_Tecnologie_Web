@@ -18,11 +18,11 @@ from django.urls import path, include
 
 import users
 from . import views
-from .views import prova
+from .views import homepage
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', prova, name='prova'),
+    path('', homepage, name='home'),
     path('users/', include('users.urls')),
     path('products/', include('products.urls')),
 
