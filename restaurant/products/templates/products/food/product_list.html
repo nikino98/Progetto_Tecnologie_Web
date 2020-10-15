@@ -20,7 +20,16 @@
                         <th scope="row">{{ item.pk }}</th>
                         <td>{{ item.name}}</td>
                         <td>{{item.description}}</td>
-                        <td>{{ item.ingredients.name }}</td>
+                        <td>
+                            {% if item.ingredients.count == 1 %}
+                                {{ item.ingredients.get }}
+                            {% else %}
+                                {% for obj in item.ingredients.all %}
+                                    {{ obj.name }} <br>
+
+                                {% endfor %}
+                        {% endif %}
+                        </td>
                         <td>{{ item.price }}</td>
                         <td><button type="button" class="btn btn-warning"><a href={% url 'home' %}>Aggiungi al carello</a></button></td>
                     </tr>
