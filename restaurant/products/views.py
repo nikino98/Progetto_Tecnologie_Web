@@ -18,12 +18,11 @@ class ProductDetailView(DetailView):
 
 def create_food(request):
     form = CreateProductForm(request.POST or None)
-    form.ingredients = form.fields['ingredients']
 
     if form.is_valid():
         form.save()
-        messages.success(request, 'Prodotto inserito correttamente')
         redirect_url = reverse('home')
+        messages.success(request, 'Prodotto inserito correttamente')
         return redirect(redirect_url)
 
     context = {
@@ -31,3 +30,13 @@ def create_food(request):
     }
 
     return render(request, 'products/food/product_create.html', context)
+
+
+def delete_food(request, id):
+    Food.objects.get(id=id).delete()
+    messages.success(request, 'Prodotto eliminato correttamente!')
+    context = {
+        'messages': messages,
+    }
+    return render(request, 'products/food/product_list.html', context)
+

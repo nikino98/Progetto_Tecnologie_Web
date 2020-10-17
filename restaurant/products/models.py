@@ -1,3 +1,4 @@
+from django.contrib import messages
 from django.db import models
 
 
@@ -18,6 +19,9 @@ class Food(models.Model):
     description = models.TextField()
     ingredients = models.ManyToManyField(Ingredient)
     price = models.DecimalField(max_digits=10, decimal_places=2)
+
+    def get_food_count(self):
+        return self.objects.count()
 
 
 class Drink(models.Model):
