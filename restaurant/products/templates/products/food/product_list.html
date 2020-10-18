@@ -4,7 +4,9 @@
 
 {% block content %}
     {% if  object_list.count == 0 %}
-        <h1>Nessun Prodotto inserito</h1>
+        <div>
+            <h1>Nessun Prodotto inserito</h1>
+        </div>
 
     {% else %}
         <table class="table">
@@ -53,7 +55,8 @@
     {% endif %}
     <button type="button" class="btn btn-primary"><a href={% url 'home' %}>Indietro</a></button>
     <button type="button" class="btn btn-secondary"><a href={% url 'products:product-create' %}>Crea un nuovo prodotto</a></button>
-{#    SISTEMA LA DELETE IN MODO DA FARLA DINAMICA#}
+
+        {#    SISTEMA LA DELETE IN MODO DA FARLA DINAMICA#}
     {#     {% if messages %}#}
     {#        <ul class="messages" style="padding: 0px;">#}
     {#            {% for message in messages %}#}
