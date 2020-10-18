@@ -53,9 +53,8 @@
             </tbody>
         </table>
     {% endif %}
-    <button type="button" class="btn btn-primary"><a href={% url 'home' %}>Indietro</a></button>
-    <button type="button" class="btn btn-secondary"><a href={% url 'products:product-create' %}>Crea un nuovo prodotto</a></button>
-
+        <button type="button" class="btn btn-primary" onclick="location.href='../'">Indietro</button>
+        <button type="button" class="btn btn-secondary" onclick="location.href='create/'">Crea un nuovo prodotto</button>
         {#    SISTEMA LA DELETE IN MODO DA FARLA DINAMICA#}
     {#     {% if messages %}#}
     {#        <ul class="messages" style="padding: 0px;">#}

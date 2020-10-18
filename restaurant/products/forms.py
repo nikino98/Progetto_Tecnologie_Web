@@ -1,5 +1,5 @@
 from crispy_forms.helper import FormHelper
-from crispy_forms.layout import Submit, Layout, Div, HTML, Field
+from crispy_forms.layout import Submit, Layout, Div, HTML, Field, Button
 from django import forms
 
 from products.models import Food
@@ -19,7 +19,8 @@ class CreateProductForm(forms.ModelForm):
 
         ),
         HTML('<br>'),
-        Submit('save', 'Save')
+        Button('cancel', 'Annulla', css_class='btn btn-primary'), #NON VA
+        Submit('save', 'Salva')
     )
     # helper.add_input(Submit('salva', 'Salva'))
 
@@ -35,6 +36,7 @@ class CreateProductForm(forms.ModelForm):
         labels = {
             'name': 'Inserisci il nome del cibo',
             'description': 'Inserisci una descrizione del cibo',
-            'ingredients': 'Inserisci la lista degli ingredienti',
+            'ingredients': 'Inserisci gli ingredienti',
             'price': 'Inserisci il prezzo'
         }
+

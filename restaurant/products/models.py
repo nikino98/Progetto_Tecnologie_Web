@@ -1,5 +1,10 @@
+from decimal import Decimal
+
 from django.contrib import messages
+from django.core.validators import MinValueValidator
 from django.db import models
+
+# from products.views import myMinValueValidator
 
 
 class Ingredient(models.Model):
@@ -15,10 +20,12 @@ class Ingredient(models.Model):
 
 
 class Food(models.Model):
+    image = models.ImageField()
     name = models.CharField(max_length=80)
     description = models.TextField()
     ingredients = models.ManyToManyField(Ingredient)
-    price = models.DecimalField(max_digits=10, decimal_places=2)
+    MinValueValidator.message = "Il prezzo del prodotto deve essere maggiore o uguale a 0!!"
+    price = models.DecimalField(max_digits=10, decimal_places=2, validators=[MinValueValidator(Decimal('0.01'))])
 
     def get_food_count(self):
         return self.objects.count()

@@ -1,3 +1,4 @@
+from django.core.validators import MinValueValidator
 from django.shortcuts import render, redirect
 from django.urls import reverse, reverse_lazy
 from django.views.generic import ListView, DetailView, DeleteView
@@ -45,3 +46,6 @@ class DeleteProduct(DeleteView):
     template_name = 'products/food/product_delete.html'
     success_url = reverse_lazy('products:product-list')
 
+
+class myMinValueValidator(MinValueValidator):
+    message = "Il prezzo dev'essere un valore maggiore o uguale a 0!"
