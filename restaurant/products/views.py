@@ -1,9 +1,9 @@
 from django.core.validators import MinValueValidator
 from django.shortcuts import render, redirect
 from django.urls import reverse, reverse_lazy
-from django.views.generic import ListView, DetailView, DeleteView
+from django.views.generic import ListView, DetailView, DeleteView, UpdateView
 from .models import Food
-from .forms import CreateProductForm
+from .forms import CreateProductForm, UpdateProductForm
 from django.contrib import messages
 
 
@@ -47,5 +47,12 @@ class DeleteProduct(DeleteView):
     success_url = reverse_lazy('products:product-list')
 
 
-class myMinValueValidator(MinValueValidator):
-    message = "Il prezzo dev'essere un valore maggiore o uguale a 0!"
+def modify_product(request):
+    form = UpdateProductForm(request.POST or None)
+    if form.is_valid() or request.POST:
+        form.save()
+        messages.success(request, 'Piatto modificato correttamente!')
+        redirect_url = reverse('products:product-list')
+        return redirect(redirect_url)
+
+
