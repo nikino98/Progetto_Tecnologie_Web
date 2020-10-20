@@ -2,7 +2,8 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
-    <h3>Modifica dell'elemento <i>{{ object.name }}</i>:</h3>
+    <h3>Modifica dell'elemento <i>{{ food_name }}</i>:</h3>
+
     <div class="container">
         {% csrf_token %}
         {% crispy form %}

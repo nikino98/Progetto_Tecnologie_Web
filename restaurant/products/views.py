@@ -12,17 +12,12 @@ class ProductListView(ListView):
     template_name = 'products/food/product_list.html'
 
 
-class ProductDetailView(DetailView):
-    model = Food
-    template_name = 'products/food/product_detail.html'
-
-
 def create_food(request):
     form = CreateProductForm(request.POST or None)
 
     if form.is_valid():
         form.save()
-        redirect_url = reverse('home')
+        redirect_url = reverse('products:product-list')
         messages.success(request, 'Prodotto inserito correttamente')
         return redirect(redirect_url)
 
