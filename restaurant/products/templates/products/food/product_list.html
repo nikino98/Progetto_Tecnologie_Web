@@ -42,7 +42,7 @@
                     <td>
                         <button type="button" class="btn btn-warning"><a href={% url 'home' %}>Aggiungi al carello</a></button>
                         <button type="button" class="btn btn-danger" id="delete-button"><a href={% url 'products:product-delete' item.id%}>Elimina</a></button>
-
+                        <button type="button" class="btn btn-info" id="update-button"><a href={% url 'products:product-update'  item.id  %}>Modifica</a></button>
 
                         {#                            <script>#}
                         {#                                function deleteFunction(){#}

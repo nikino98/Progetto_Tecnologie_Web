@@ -1,7 +1,11 @@
 {% extends 'base.html' %}
+{% load crispy_forms_tags %}
 
-<form method="post">
+{% block content %}
     <h3>Modifica dell'elemento <i>{{ object.name }}</i>:</h3>
+    <div class="container">
+        {% csrf_token %}
+        {% crispy form %}
+    </div>
 
-    <p>Immagine attuale: <img src="{{ object.image }}"></p>
-</form>
+{% endblock %}

@@ -71,3 +71,6 @@ class UpdateProductForm(forms.ModelForm):
             'price': 'Prezzo del piatto',
         }
 
+
+
+

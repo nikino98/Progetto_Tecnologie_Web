@@ -1,5 +1,5 @@
 from django.core.validators import MinValueValidator
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse, reverse_lazy
 from django.views.generic import ListView, DetailView, DeleteView, UpdateView
 from .models import Food
@@ -47,12 +47,25 @@ class DeleteProduct(DeleteView):
     success_url = reverse_lazy('products:product-list')
 
 
-def modify_product(request):
+# FUNZIONA
+def modify_product(request, pk):
     form = UpdateProductForm(request.POST or None)
-    if form.is_valid() or request.POST:
-        form.save()
+    food = get_object_or_404(Food, pk=pk)
+    if request.POST and form.is_valid():
+        food.name = form.cleaned_data['name']
+        food.description = form.cleaned_data['description']
+        food.ingredients.set(form.cleaned_data['ingredients'])
+        food.image = form.cleaned_data['image']
+        food.price = form.cleaned_data['price']
+        food.save()
         messages.success(request, 'Piatto modificato correttamente!')
         redirect_url = reverse('products:product-list')
         return redirect(redirect_url)
 
+    context = {
+        'form': form,
+        'food_name': food.name,
+    }
+
+    return render(request, 'products/food/product_update.html', context)
 
