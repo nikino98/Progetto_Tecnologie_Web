@@ -11,5 +11,5 @@ from .models import User
 
 class UserCreateView(CreateView):
     form_class = UserCreationForm
-    template_name = 'users/user_creation.html'
+    template_name = 'users/../users/templates/registration/user_creation.html'
     success_url = reverse_lazy('home')
