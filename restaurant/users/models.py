@@ -30,7 +30,7 @@ class CustomUser(BaseUserManager):
             first_name=first_name,
             password=password,
             is_active=True,
-            is_admin=True,
+            is_staff=True,
         )
         user.save(using=self.db)
         return user

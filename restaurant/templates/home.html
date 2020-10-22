@@ -1,12 +1,18 @@
 {% extends 'base.html' %}
+{% load static %}
+
 {% block title %}
     Restaurant
 {% endblock %}
 
+{% block head %}<link rel="stylesheet" type="text/css" href="{% static "../static/css/home.css" %}">{% endblock %}
 {% block content %}
     <h1>Ristorante pizzeria</h1>
     <div>
         <a href={% url 'products:product-list' %}>Lista prodotti</a>
         <a href={% url 'users:user-creation' %}>Registrati</a>
+    </div>
+    <div class="topcorner">
+        <a href={% url 'users:login' %}>Login</a>
     </div>
 {% endblock %}
