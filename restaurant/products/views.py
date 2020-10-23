@@ -5,6 +5,7 @@ from django.views.generic import ListView, DetailView, DeleteView, UpdateView
 from .models import Food
 from .forms import CreateProductForm, UpdateProductForm
 from django.contrib import messages
+from users.models import User
 
 
 class ProductListView(ListView):
@@ -22,7 +23,7 @@ def create_food(request):
         return redirect(redirect_url)
 
     context = {
-        'form': form
+        'form': form,
     }
 
     return render(request, 'products/food/product_create.html', context)

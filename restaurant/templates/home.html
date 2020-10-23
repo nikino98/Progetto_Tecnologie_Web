@@ -8,11 +8,17 @@
 {% block head %}<link rel="stylesheet" type="text/css" href="{% static "../static/css/home.css" %}">{% endblock %}
 {% block content %}
     <h1>Ristorante pizzeria</h1>
+    <br>
+{#    NON VA#}
+    {% if user.is_authenticated %}
+        <h4>Ciao {{ user.first_name | capfirst }}!!</h4>
+    {% endif %}
     <div>
         <a href={% url 'products:product-list' %}>Lista prodotti</a>
         <a href={% url 'users:user-creation' %}>Registrati</a>
     </div>
     <div class="topcorner">
         <a href={% url 'users:login' %}>Login</a>
+        <a href={% url 'users:logout' %}>Logout</a>
     </div>
 {% endblock %}

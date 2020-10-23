@@ -3,11 +3,11 @@ from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit, Layout, Button
 from django.contrib.auth.forms import UserCreationForm
 from django import forms
-
+from django.contrib.auth import get_user_model
 from users.models import User
 
 
-class UserCreationForm(UserCreationForm):
+class UserCreateForm(UserCreationForm):
     email = forms.EmailField(required=True)
 
     def __init__(self, *args, **kwargs):

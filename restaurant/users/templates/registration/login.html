@@ -15,12 +15,13 @@
             <!-- Login Form -->
             <form method="post">
                 {% csrf_token %}
-                <div  class="col-md-16 centering" >
-                    {{ form.username | as_crispy_field  }}
-                </div>
-                <div class="col-md-16 centering "  >
-                    {{ form.password | as_crispy_field  }}
-                </div>
+                {{ form|crispy }}
+{#                <div  class="col-md-16 centering" >#}
+{#                    {{ form | as_crispy_field  }}#}
+{#                </div>#}
+{#                <div class="col-md-16 centering "  >#}
+{#                    {{ form.password | as_crispy_field  }}#}
+{#                </div>#}
                 <input type="submit" class="fadeIn fourth" value="Log In">
 
             </form>

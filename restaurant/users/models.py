@@ -44,6 +44,7 @@ class User(AbstractBaseUser):
     is_admin = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
+    is_restaurateur = models.BooleanField(default=False)
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['first_name', 'last_name']
@@ -59,10 +60,6 @@ class User(AbstractBaseUser):
     @property
     def is_superuser(self):
         return self.is_admin
-
-    @property
-    def is_staff(self):
-        return self.is_staff
 
     def has_perm(self, perm, obj=None):
         return True

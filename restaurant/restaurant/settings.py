@@ -43,7 +43,6 @@ INSTALLED_APPS = [
     'users',
     'products',
     'cart',
-    'users2',
 ]
 
 MIDDLEWARE = [
@@ -135,5 +134,8 @@ MEDIA_URL = '/media/'
 
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 
+# usa il mio modello per l'autenticazione
+AUTH_USER_MODEL = 'users.User'
 LOGIN_URL = 'login'
-LOGIN_REDIRECT_URL = reverse_lazy('home')
+LOGIN_REDIRECT_URL = 'home'
+
