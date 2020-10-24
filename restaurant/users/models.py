@@ -10,7 +10,7 @@ class CustomUser(BaseUserManager):
             raise ValueError("L'utente deve avere un'email!")
 
         user = self.model(
-            email=self.normalize_email(email)   # normalize: tutti i caratteri come lowercase
+            email=self.normalize_email(email)  # normalize: tutti i caratteri come lowercase
         )
 
         # assegno gli attributi a user
@@ -90,11 +90,8 @@ class Address(models.Model):
 
 
 class Profile(models.Model):
-    class Profile(models.Model):
-        user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
-        address = models.ManyToManyField(Address)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
+    address = models.ManyToManyField(Address)
 
-        def __str__(self):
-            return f'Profilo di {self.user.first_name} {self.user.last_name}'
-
-
+    def __str__(self):
+        return f'Profilo di {self.user.first_name} {self.user.last_name}'
