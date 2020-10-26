@@ -95,3 +95,13 @@ class Profile(models.Model):
 
     def __str__(self):
         return f'Profilo di {self.user.first_name} {self.user.last_name}'
+
+
+# modello per riservare un tavolo
+class Table(models.Model):
+    n_people = models.DecimalField(max_digits=2, decimal_places=0)
+    reservation_name = models.CharField(max_length=50, default=None)
+    reservation_last_name = models.CharField(max_length=50, default=None)
+
+    def __str__(self):
+        return f'Tavolo riservato per {self.n_people} a nome {self.reservation_name} {self.reservation_last_name}'

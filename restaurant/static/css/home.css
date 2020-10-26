@@ -2,5 +2,19 @@
     position:absolute;
     top:0;
     right:0;
+    margin-top: 20px;
+    margin-right: 20px;
+}
+
+#submission{
+    margin-top: 100px;
+    text-align: center;
+}
+
+#reservation-button{
+    alignment: bottom;
+    color: white;
+    background-color: orange;
 
 }
+

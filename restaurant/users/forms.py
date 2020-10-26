@@ -4,7 +4,7 @@ from crispy_forms.layout import Submit, Layout, Button
 from django.contrib.auth.forms import UserCreationForm
 from django import forms
 from django.contrib.auth import get_user_model
-from users.models import User, Address
+from users.models import User, Address, Table
 
 
 class UserCreateForm(UserCreationForm):
@@ -61,5 +61,28 @@ class AddressForm(forms.ModelForm):
             )
 
 
+class ReservationForm(forms.ModelForm):
+    helper = FormHelper()
+    helper.form_id = 'table-reservation-crispy'
+    helper.form_method = 'POST'
+    helper.add_input(Submit('submit', 'Salva'))
+
+    class Meta:
+        model = Table
+        fields = (
+            'n_people',
+            'reservation_name',
+            'reservation_last_name',
+        )
+
+        labels = (
+            'Inserisci il numero di persone per la prenotazione:',
+            'Inserisci il nome per la prenotazione:',
+            'Inserisci il cognome per la prenotazione',
+        )
 
 
+# class ReservationForm(forms.Form):
+#     n_people = forms.CharField(label='Inserisci il numero di persone: ')
+#     reservation_name = forms.CharField(label='Inserisci il nome per la prenotazione: ')
+#     reservation_last_name = forms.CharField(label= 'Inserisci il cognome per la prenotazione')
