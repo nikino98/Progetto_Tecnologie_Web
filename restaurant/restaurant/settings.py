@@ -31,7 +31,7 @@ ALLOWED_HOSTS = []
 
 
 # Application definition
-
+# per creare un superuser con le credeziali di default, mettere django.contrib.admin prima
 INSTALLED_APPS = [
     'users',
     'django.contrib.admin',
@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'crispy_forms',
     'products',
     'cart',
+
 ]
 
 MIDDLEWARE = [

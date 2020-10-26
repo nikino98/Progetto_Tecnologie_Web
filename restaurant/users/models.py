@@ -83,7 +83,7 @@ class Address(models.Model):
     note = models.TextField(blank=True)
 
     def __str__(self):
-        return f'{self.cap} - {self.città} - Via/Piazza {self.via} - num. {self.n_civico}'
+        return f'{self.cap} - {self.city} - Via/Piazza {self.via} - num. {self.house_number}'
 
     class Meta:
         verbose_name_plural = 'Addresses'
