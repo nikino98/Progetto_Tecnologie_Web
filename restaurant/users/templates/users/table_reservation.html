@@ -1,14 +1,47 @@
 {% extends 'base.html' %}
 {% load crispy_forms_tags %}
 
-{% block title %}Prenotazione{% endblock %}
-
-{% block content %}
-    {% crispy form %}
+{% block head %}
+    <link rel="stylesheet" type="text/css" href="jquery.datetimepicker.css"/>
 {% endblock %}
 
+{% block title %}Prenotazione{% endblock %}
+
 {#{% block content %}#}
-{#    <form method="post">{% csrf_token %}#}
-{#        {% form | crispy %}#}
-{#    </form>#}
+{#    <h3>Prenota il tuo tavolo!</h3>#}
+{#    {% crispy form %}#}
+{#     <button type="button" class="btn btn-danger" onclick="location.href='{% url 'home' %}'"#}
+{#                id="reservation-button">Annulla</button>#}
 {#{% endblock %}#}
+
+{% block content %}
+    <form method="post">{% csrf_token %}
+        <div>
+            <p>Inserisci il numero di persone della prenotazione:</p>
+            <p>{{ form.n_people }}</p>
+            <p>Inserisci il nome per la prenotazione:</p>
+            <p>{{ form.reservation_name  }}</p>
+            <p>Inserisci il cognome per la prenotazione:</p>
+            <p>{{ form.reservation_last_name }}</p>
+        </div>
+
+        <div class="input-group date" id="datetimepicker1" data-target-input="nearest">
+            {{ form.date }}
+            <div class="input-group-append" data-target="#datetimepicker1" data-toggle="datetimepicker">
+                <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+            </div>
+        </div>
+        <br>
+    <input type="submit" value="Salva" class="btn btn-success">
+    </form>
+{% endblock %}
+
+{% block javascript %}
+    <script>
+  $(document).ready(function () {
+    $('#datetimepicker1').datetimepicker({
+      format: 'DD/MM/YYYY HH:mm',
+    });
+  });
+</script>
+{% endblock %}

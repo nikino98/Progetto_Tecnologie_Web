@@ -26,22 +26,25 @@ def user_profile(request):
 #     #     error
 #
 
-#da finire
+# da finire
 def table_reserved(request):
-    user = User.objects.get(user=request.user) or None
-    form = get_object_or_404(ReservationForm)
-    if form.is_valid():
+    form = ReservationForm(request.POST or None)
+    if form.is_valid() or request.POST:
         form.save()
         return reverse_lazy('home')
     else:
         form = ReservationForm()
+    context = {
+        'form': form
+    }
+    return render(request, 'users/table_reservation.html', context)
 
 
-class TableReserve(CreateView):
-    model = Table
-    template_name = 'users/table_reservation.html'
-    form_class = ReservationForm
-    success_url = '../../'
+# class TableReserve(CreateView):
+#     model = Table
+#     template_name = 'users/table_reservation.html'
+#     form_class = ReservationForm
+#     success_url = '../../'
 
 
 class AddressCreate(CreateView):

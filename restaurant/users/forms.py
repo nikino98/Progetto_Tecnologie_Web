@@ -1,9 +1,12 @@
 from crispy_forms.bootstrap import FormActions
 from crispy_forms.helper import FormHelper
-from crispy_forms.layout import Submit, Layout, Button
+from crispy_forms.layout import Submit, Layout, Button, HTML
 from django.contrib.auth.forms import UserCreationForm
 from django import forms
 from django.contrib.auth import get_user_model
+from django.db import models
+from django.forms import fields
+
 from users.models import User, Address, Table
 
 
@@ -33,12 +36,12 @@ class UserCreateForm(UserCreationForm):
             'password2',
         )
 
-        # labels = {
-        #     'first_name': 'Mario Rossi',
-        #     'email': 'mariorossi@gmail.com',
-        #     'password1': 'Digita la tua password',
-        #     'password2': 'Reinserisci la password'
-        # }
+        labels = {
+            'first_name': 'Mario Rossi',
+            'email': 'mariorossi@gmail.com',
+            'password1': 'Digita la tua password',
+            'password2': 'Reinserisci la password'
+        }
 
 
 class AddressForm(forms.ModelForm):
@@ -58,31 +61,50 @@ class AddressForm(forms.ModelForm):
             'house_number',
             'piano',
             'note'
-            )
-
-
-class ReservationForm(forms.ModelForm):
-    helper = FormHelper()
-    helper.form_id = 'table-reservation-crispy'
-    helper.form_method = 'POST'
-    helper.add_input(Submit('submit', 'Salva'))
-
-    class Meta:
-        model = Table
-        fields = (
-            'n_people',
-            'reservation_name',
-            'reservation_last_name',
-        )
-
-        labels = (
-            'Inserisci il numero di persone per la prenotazione:',
-            'Inserisci il nome per la prenotazione:',
-            'Inserisci il cognome per la prenotazione',
         )
 
 
-# class ReservationForm(forms.Form):
-#     n_people = forms.CharField(label='Inserisci il numero di persone: ')
-#     reservation_name = forms.CharField(label='Inserisci il nome per la prenotazione: ')
-#     reservation_last_name = forms.CharField(label= 'Inserisci il cognome per la prenotazione')
+# class ReservationForm(forms.ModelForm):
+#     helper = FormHelper()
+#     helper.form_id = 'table-reservation-crispy'
+#     helper.form_method = 'POST'
+#     helper.layout = Layout(
+#
+#     )
+#     helper.add_input(Submit('submit', 'Salva'))
+#
+#     class Meta:
+#         model = Table
+#         fields = (
+#             'n_people',
+#             'reservation_name',
+#             'reservation_last_name',
+#             'date',
+#         )
+#
+#         labels = {
+#             'n_people': 'Inserisci il numero di persone per la prenotazione:',
+#             'reservation_name': 'Inserisci il nome per la prenotazione:',
+#             'reservation_last_name': 'Inserisci il cognome per la prenotazione',
+#         }
+
+
+# class IntegerRangeField(models.IntegerField):
+#     def __init__(self, *args, **kwargs):
+#         kwargs['min_value'] = 0
+#         kwargs['label'] = 'Inserisci il numero di persone: '
+#         super().__init__(*args, **kwargs)
+#
+#
+
+class ReservationForm(forms.Form):
+    n_people = forms.DecimalField(label='Inserisci il numero di persone della prenotazione:')
+    reservation_name = forms.CharField(label='Inserisci il nome per la prenotazione: ')
+    reservation_last_name = forms.CharField(label='Inserisci il cognome per la prenotazione')
+    date = forms.DateTimeField(
+        input_formats=['%d/%m/%Y %H:%M'],
+        widget=forms.DateTimeInput(attrs={
+            'class': 'form-control datetimepicker-input',
+            'data-target': '#datetimepicker1'
+        })
+    )

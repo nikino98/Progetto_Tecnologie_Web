@@ -15,11 +15,16 @@
     {% endif %}
     <div>
         <a href={% url 'products:product-list' %}>Menù</a>
-        <a href={% url 'users:user-creation' %}>Registrati</a>
+        {% if not user.is_authenticated %}
+            <a href={% url 'users:user-creation' %}>Registrati</a>
+        {% endif %}
     </div>
     <div class="topcorner">
-        <a href={% url 'users:login' %}>Login</a>
-        <a href={% url 'users:logout' %}>Logout</a>
+        {% if not user.is_authenticated %}
+            <a href={% url 'users:login' %}>Login</a>
+        {% else %}
+            <a href={% url 'users:logout' %}>Logout</a>
+        {% endif %}
     </div>
     <p id="submission">
         <button type="button" class="btn btn-default" onclick="location.href='{% url 'users:table-reserve' %}'"

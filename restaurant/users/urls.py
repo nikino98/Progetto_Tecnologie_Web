@@ -1,7 +1,8 @@
 from django.urls import path
 from django.contrib.auth import views as auth_views
 from restaurant import views
-from users.views import UserCreateView, AddressList, AddressDelete, AddressCreate, AddressModify, user_profile, TableReserve
+from users.views import UserCreateView, AddressList, AddressDelete, AddressCreate, AddressModify, user_profile, \
+    table_reserved
 
 app_name = 'users'
 
@@ -14,5 +15,6 @@ urlpatterns = [
     path('address/delete/', AddressDelete.as_view(), name='address-delete'),
     path('address/modify/', AddressModify.as_view(), name='address-modify'),
     path('address/list/', AddressList.as_view(), name='address-list'),
-    path('reservation/', TableReserve.as_view(), name='table-reserve'),
+    # path('reservation/', TableReserve.as_view(), name='table-reserve'),
+    path('reservation/', table_reserved, name='table-reserve'),
 ]

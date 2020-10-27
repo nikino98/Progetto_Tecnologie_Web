@@ -99,9 +99,11 @@ class Profile(models.Model):
 
 # modello per riservare un tavolo
 class Table(models.Model):
+    # user = models.OneToOneField(User, on_delete=models.CASCADE)
     n_people = models.DecimalField(max_digits=2, decimal_places=0)
     reservation_name = models.CharField(max_length=50, default=None)
     reservation_last_name = models.CharField(max_length=50, default=None)
+    date = models.DateTimeField(default=None)
 
     def __str__(self):
         return f'Tavolo riservato per {self.n_people} a nome {self.reservation_name} {self.reservation_last_name}'
