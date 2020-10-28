@@ -6,24 +6,24 @@ from products.models import Food
 
 
 class CreateProductForm(forms.ModelForm):
-    helper = FormHelper()
-    helper.form_id = 'product-create-form'
-    helper.form_method = 'POST'
-    helper.layout = Layout(
-        Div(
-            HTML("<h3>Inserisci un nuovo prodotto</h3>"),
-            Field('image', 'Inserisci immagine', title='Image'),
-            HTML('<br>'),
-            Field('name', css_class='bg-white', title='Name'),
-            Field('description', css_class='bg-white', title='Description'),
-            Field('ingredients', css_class='bg-white', title='Ingredients'),
-            Field('price', css_class='bg-white', title='Price'),
-
-        ),
-        HTML('<br>'),
-        Button('cancel', 'Annulla', css_class='btn btn-primary'), #NON VA
-        Submit('save', 'Salva')
-    )
+    # helper = FormHelper()
+    # helper.form_id = 'product-create-form'
+    # helper.form_method = 'POST'
+    # helper.layout = Layout(
+    #     Div(
+    #         HTML("<h3>Inserisci un nuovo prodotto</h3>"),
+    #         Field('image', 'Inserisci immagine', title='Image'),
+    #         HTML('<br>'),
+    #         Field('name', css_class='bg-white', title='Name'),
+    #         Field('description', css_class='bg-white', title='Description'),
+    #         Field('ingredients', css_class='bg-white', title='Ingredients'),
+    #         Field('price', css_class='bg-white', title='Price'),
+    #
+    #     ),
+    #     HTML('<br>'),
+    #     Button('cancel', 'Annulla', css_class='btn btn-primary'), #NON VA
+    #     Submit('save', 'Salva')
+    # )
     # helper.add_input(Submit('salva', 'Salva'))
 
     class Meta:

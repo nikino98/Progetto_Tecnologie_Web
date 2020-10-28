@@ -6,7 +6,9 @@
 {% block content %}
     <h2>Creazione di un nuovo utente</h2>
 
-    {% csrf_token %}
-    {% crispy form %}
+    <form method="post">{% csrf_token %}
+        {{ form | crispy }}
+    <input type="submit" value="Salva">
+    </form>
 
 {% endblock %}

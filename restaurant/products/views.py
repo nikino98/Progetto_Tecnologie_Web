@@ -14,7 +14,7 @@ class ProductListView(ListView):
 
 
 def create_food(request):
-    form = CreateProductForm(request.POST or None)
+    form = CreateProductForm(request.POST, request.FILES)
 
     if form.is_valid():
         form.save()
@@ -45,7 +45,7 @@ class DeleteProduct(DeleteView):
 
 # FUNZIONA
 def modify_product(request, pk):
-    form = UpdateProductForm(request.POST or None)
+    form = UpdateProductForm(request.POST, request.FILES)
     food = get_object_or_404(Food, pk=pk)
     if request.POST and form.is_valid():
         food.name = form.cleaned_data['name']

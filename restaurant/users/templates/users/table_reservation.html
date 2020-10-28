@@ -2,7 +2,7 @@
 {% load crispy_forms_tags %}
 
 {% block head %}
-    <link rel="stylesheet" type="text/css" href="jquery.datetimepicker.css"/>
+
 {% endblock %}
 
 {% block title %}Prenotazione{% endblock %}
@@ -23,25 +23,17 @@
             <p>{{ form.reservation_name  }}</p>
             <p>Inserisci il cognome per la prenotazione:</p>
             <p>{{ form.reservation_last_name }}</p>
+            <p>Inserisci la data per la prenotazione: </p>
+            <p>{{ form.date }}</p>
+            <p>{{ form.date.help_text }}</p>
+            {% if error %}
+                <div class="alert alert-danger" role="alert">Formato data sbagliato!!</div>
+            {% endif %}
         </div>
-
-        <div class="input-group date" id="datetimepicker1" data-target-input="nearest">
-            {{ form.date }}
-            <div class="input-group-append" data-target="#datetimepicker1" data-toggle="datetimepicker">
-                <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-            </div>
-        </div>
-        <br>
     <input type="submit" value="Salva" class="btn btn-success">
     </form>
 {% endblock %}
 
 {% block javascript %}
-    <script>
-  $(document).ready(function () {
-    $('#datetimepicker1').datetimepicker({
-      format: 'DD/MM/YYYY HH:mm',
-    });
-  });
-</script>
+
 {% endblock %}

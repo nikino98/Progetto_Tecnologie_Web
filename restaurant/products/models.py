@@ -20,7 +20,7 @@ class Ingredient(models.Model):
 
 
 class Food(models.Model):
-    image = models.ImageField(upload_to='dishes/', default='dishes/no-imaage-1771002-1505134.png')
+    image = models.ImageField(default=None, null=True, blank=True, upload_to='dishes')
     name = models.CharField(max_length=80)
     description = models.TextField()
     ingredients = models.ManyToManyField(Ingredient)

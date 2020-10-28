@@ -36,10 +36,35 @@ class CustomUser(BaseUserManager):
         return user
 
 
+# class Address(models.Model):
+#     region = models.CharField(max_length=35)
+#     province = models.CharField(max_length=30)
+#     cap = models.CharField(max_length=5)
+#     city = models.CharField(max_length=50)
+#     via = models.CharField(max_length=50)
+#     house_number = models.CharField(max_length=10)
+#     piano = models.CharField(max_length=30, blank=True)
+#     note = models.TextField(blank=True)
+#
+#     def __str__(self):
+#         return f'{self.cap} - {self.city} - Via/Piazza {self.via} - num. {self.house_number}'
+#
+#     class Meta:
+#         verbose_name_plural = 'Addresses'
+
+
 class User(AbstractBaseUser):
     email = models.EmailField(max_length=60, unique=True)
     first_name = models.CharField(max_length=60)
     last_name = models.CharField(max_length=60)
+    region = models.CharField(max_length=35)
+    province = models.CharField(max_length=30)
+    cap = models.CharField(max_length=5)
+    city = models.CharField(max_length=50)
+    via = models.CharField(max_length=50)
+    house_number = models.CharField(max_length=10)
+    piano = models.CharField(max_length=30, blank=True)
+    note = models.TextField(blank=True)
     tel = models.CharField(max_length=20)
     is_admin = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
@@ -72,29 +97,13 @@ class User(AbstractBaseUser):
         verbose_name_plural = _('Restaurant users')
 
 
-class Address(models.Model):
-    region = models.CharField(max_length=35)
-    province = models.CharField(max_length=30)
-    cap = models.CharField(max_length=5)
-    city = models.CharField(max_length=50)
-    via = models.CharField(max_length=50)
-    house_number = models.CharField(max_length=10)
-    piano = models.CharField(max_length=30, blank=True)
-    note = models.TextField(blank=True)
 
-    def __str__(self):
-        return f'{self.cap} - {self.city} - Via/Piazza {self.via} - num. {self.house_number}'
-
-    class Meta:
-        verbose_name_plural = 'Addresses'
-
-
-class Profile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
-    address = models.ManyToManyField(Address)
-
-    def __str__(self):
-        return f'Profilo di {self.user.first_name} {self.user.last_name}'
+# class Profile(models.Model):
+#     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
+#     address = models.ManyToManyField(Address)
+#
+#     def __str__(self):
+#         return f'Profilo di {self.user.first_name} {self.user.last_name}'
 
 
 # modello per riservare un tavolo
