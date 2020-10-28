@@ -92,23 +92,18 @@ class User(AbstractBaseUser):
     def has_module_perms(self, app_label):
         return True
 
+    @property
+    def numero_prenotazioni(self):
+        return self.prenotazioni.all().count()
+
     class Meta:
         verbose_name = _('Restaurant user')
         verbose_name_plural = _('Restaurant users')
 
 
-
-# class Profile(models.Model):
-#     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
-#     address = models.ManyToManyField(Address)
-#
-#     def __str__(self):
-#         return f'Profilo di {self.user.first_name} {self.user.last_name}'
-
-
 # modello per riservare un tavolo
 class Table(models.Model):
-    # user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, default=None, related_name="prenotazioni")
     n_people = models.DecimalField(max_digits=2, decimal_places=0)
     reservation_name = models.CharField(max_length=50, default=None)
     reservation_last_name = models.CharField(max_length=50, default=None)

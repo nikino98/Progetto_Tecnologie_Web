@@ -19,17 +19,23 @@ class Ingredient(models.Model):
         return self.name
 
 
-class Food(models.Model):
-    image = models.ImageField(default=None, null=True, blank=True, upload_to='dishes')
+class Product(models.Model):
     name = models.CharField(max_length=80)
     description = models.TextField()
-    ingredients = models.ManyToManyField(Ingredient)
     MinValueValidator.message = "Il prezzo del prodotto deve essere maggiore o uguale a 0!!"
     price = models.DecimalField(max_digits=10, decimal_places=2, validators=[MinValueValidator(Decimal('0.01'))])
+
+    class Meta:
+        abstract = True
+
+
+class Food(Product):
+    image = models.ImageField(default=None, null=True, blank=True, upload_to='dishes')
+    ingredients = models.ManyToManyField(Ingredient)
 
     def get_food_count(self):
         return self.objects.count()
 
 
-class Drink(models.Model):
-    name = models.CharField(max_length=50)
+class Drink(Product):
+    litri = models.DecimalField(max_digits=10, decimal_places=2, validators=[MinValueValidator(Decimal('0.01'))])
