@@ -17,15 +17,15 @@
 {% block content %}
     <form method="post">{% csrf_token %}
         <div>
-            <p>Inserisci il numero di persone della prenotazione:</p>
+            <p><b>Inserisci il numero di persone della prenotazione:</b></p>
             <p>{{ form.n_people }}</p>
-            <p>Inserisci il nome per la prenotazione:</p>
+            <p><b>Inserisci il nome per la prenotazione:</b></p>
             <p>{{ form.reservation_name  }}</p>
-            <p>Inserisci il cognome per la prenotazione:</p>
+            <p><b>Inserisci il cognome per la prenotazione:</b></p>
             <p>{{ form.reservation_last_name }}</p>
-            <p>Inserisci la data per la prenotazione: </p>
+            <p><b>Inserisci la data per la prenotazione:</b></p>
             <p>{{ form.date }}</p>
-            <p>{{ form.date.help_text }}</p>
+            <p><em>{{ form.date.help_text }}</em></p>
             {% if error %}
                 <div class="alert alert-danger" role="alert">Formato data sbagliato!!</div>
             {% endif %}

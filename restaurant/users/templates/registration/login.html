@@ -5,26 +5,11 @@
 
 {% block title %}Login{% endblock %}
 {% block content %}
-
-    <div class="wrapper fadeInDown">
-        <div id="formContent">
-            <!-- Tabs Titles -->
-
-
-
-            <!-- Login Form -->
-            <form method="post">
-                {% csrf_token %}
-                {{ form|crispy }}
-{#                <div  class="col-md-16 centering" >#}
-{#                    {{ form | as_crispy_field  }}#}
-{#                </div>#}
-{#                <div class="col-md-16 centering "  >#}
-{#                    {{ form.password | as_crispy_field  }}#}
-{#                </div>#}
-                <input type="submit" class="fadeIn fourth" value="Log In">
-
-            </form>
-        </div>
-    </div>
+    <form method="post">{% csrf_token %}
+        {% if form.errors %}
+            <div class="alert alert-danger" role="alert">Utente o password sbagliati!</div>
+        {% endif %}
+        <p>{{ form|crispy    }}</p>
+        <input type="submit" class="btn-info" value="Log In">
+    </form>
 {% endblock %}

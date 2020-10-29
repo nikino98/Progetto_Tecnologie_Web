@@ -30,7 +30,7 @@ class Product(models.Model):
 
 
 class Food(Product):
-    image = models.ImageField(default=None, null=True, blank=True, upload_to='dishes')
+    image = models.ImageField(default='dishes/no-image-1771002-1505134.png', null=True, blank=True, upload_to='dishes')
     ingredients = models.ManyToManyField(Ingredient)
 
     def get_food_count(self):
