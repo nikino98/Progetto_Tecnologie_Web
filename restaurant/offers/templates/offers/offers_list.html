@@ -1,10 +1,65 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
 
-</body>
-</html>
+{% block content %}
+    <h2>Offerte per le bevande</h2>
+    {% if drink.count == 0 %}
+        <h4><em>Non ci sono offerte per le bevande!</em></h4>
+        <br>
+    {% else %}
+    <table class="table">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Codice</th>
+      <th scope="col">Bevande</th>
+      <th scope="col">Sconto</th>
+    </tr>
+  </thead>
+  <tbody>
+
+        {% for d in drink %}
+             <tr>
+                <th scope="row">{{ forloop.counter }}</th>
+                <td>{{ d.code }}</td>
+                <td>{{ d.drink }}</td>
+                <td>{{ d.discount }}%</td>
+             </tr>
+        {% endfor %}
+  </tbody>
+</table>
+        <br>
+    {% endif %}
+
+
+    <h2>Offerte per i cibi</h2>
+    {% if food.count == 0 %}
+        <h4>Non ci sono offerte per i cibi!</h4>
+    {% else %}
+    <table class="table">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Codice</th>
+      <th scope="col">Cibo</th>
+      <th scope="col">Sconto</th>
+    </tr>
+  </thead>
+  <tbody>
+
+        {% for f in food %}
+             <tr>
+                <th scope="row">{{ forloop.counter }}</th>
+                <td>{{ f.code }}</td>
+                <td>{{ f.food }}</td>
+                <td>{{ f.discount }}%</td>
+             </tr>
+        {% endfor %}
+  </tbody>
+</table>
+    {% endif %}
+
+    <button type="button" class="btn btn-danger" onclick="location.href='{% url 'home' %}'"
+                id="reservation-button">Indietro</button>
+
+{% endblock %}

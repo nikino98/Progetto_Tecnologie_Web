@@ -60,6 +60,10 @@ def table_reserved(request):
         form = ReservationForm(request.POST)
         if form.is_valid():
             # form.save() andava anche così e con la funzione save nel form
+            if request.user.is_authenticated:
+                if request.user.numero_prenotazioni % 1 == 0:
+                    form.cleaned_data["discount"] = 15
+
             Table.objects.create(**form.cleaned_data)
             return redirect(reverse_lazy('home'))
         else:

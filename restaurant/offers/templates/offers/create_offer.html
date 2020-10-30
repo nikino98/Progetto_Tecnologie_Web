@@ -1,10 +1,15 @@
 {% extends 'base.html' %}
+{% load crispy_forms_tags %}
 
 {% block title %}Crea un'offerta{% endblock %}
 
 {% block content %}
-     <p><b>Inserisci il codice dello sconto: </b></p>{{ object.code }}
-    <p><b>Inserisci il prodotto sul quale applicare lo sconto: </b></p>{{ object.product}}
-    <p><b>Inserisci l'ammontare dello sconto</b></p>{{ object.discount }}
-    <p><em>{{ object.discount }}</em></p>
+    <form method="post">{% csrf_token %}
+        {{ form | crispy }}
+        <input type="submit" value="Salva">
+    </form>
+{#     <p><b>Inserisci il codice dello sconto: </b></p>{{ object.code }}#}
+{#    <p><b>Inserisci il prodotto sul quale applicare lo sconto: </b></p>{{ object.product}}#}
+{#    <p><b>Inserisci l'ammontare dello sconto</b></p>{{ object.discount }}#}
+{#    <p><em>{{ object.discount }}</em></p>#}
 {% endblock %}

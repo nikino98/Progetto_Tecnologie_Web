@@ -129,7 +129,7 @@ class ReservationForm(forms.Form):
     n_people = forms.DecimalField(min_value=1, label='Inserisci il numero di persone della prenotazione:')
     reservation_name = forms.CharField(label='Inserisci il nome per la prenotazione: ')
     reservation_last_name = forms.CharField(label='Inserisci il cognome per la prenotazione')
-    date = forms.DateTimeField(help_text='Inserisci data nel formato YYYY-MM-DD.')
+    date = forms.DateTimeField(help_text="Inserisci data e l'ora nel formato YYYY-MM-DD hh:mm")
 
     # def save(self):
     #     data = self.cleaned_data

@@ -1,5 +1,6 @@
 from django.contrib.auth.base_user import BaseUserManager, AbstractBaseUser
 from django.core.exceptions import ObjectDoesNotExist
+from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
@@ -110,6 +111,8 @@ class Table(models.Model):
     reservation_name = models.CharField(max_length=50, default=None)
     reservation_last_name = models.CharField(max_length=50, default=None)
     date = models.DateTimeField(default=None, null=True)
+    discount = models.PositiveIntegerField(default=0, help_text="Inserire l'ammontare dello sconto percentuale",
+                                           validators=[MinValueValidator(1), MaxValueValidator(100)])
 
     def __str__(self):
         return f'Tavolo riservato per {self.n_people} a nome {self.reservation_name} {self.reservation_last_name}'

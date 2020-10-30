@@ -7,14 +7,12 @@
 
 {% block title %}Prenotazione{% endblock %}
 
-{#{% block content %}#}
-{#    <h3>Prenota il tuo tavolo!</h3>#}
-{#    {% crispy form %}#}
-{#     <button type="button" class="btn btn-danger" onclick="location.href='{% url 'home' %}'"#}
-{#                id="reservation-button">Annulla</button>#}
-{#{% endblock %}#}
-
 {% block content %}
+    {% if user.is_authenticated %}
+        {% if user.numero_prenotazioni|divisibleby:1 %}
+            <h2>Hai lo sconto del 15%!!</h2>
+        {% endif %} 
+    {% endif %} 
     <form method="post">{% csrf_token %}
         <div>
             <p><b>Inserisci il numero di persone della prenotazione:</b></p>

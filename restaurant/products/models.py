@@ -36,6 +36,12 @@ class Food(Product):
     def get_food_count(self):
         return self.objects.count()
 
+    def __str__(self):
+        return self.name
+
 
 class Drink(Product):
     litri = models.DecimalField(max_digits=10, decimal_places=2, validators=[MinValueValidator(Decimal('0.01'))])
+
+    def __str__(self):
+        return self.name

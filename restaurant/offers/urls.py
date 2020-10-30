@@ -1,9 +1,9 @@
 from django.urls import path, include
-# from .views import CreateOffer
+from .views import CreateOfferFood, CreateOfferDrink, offer_list
 
 app_name = 'offers'
 urlpatterns = [
-    # path(''),
-    # path('create/', CreateOffer.as_view(), name='offer-create'),
+    path('', offer_list, name='offers-list'),
+    path('create/', CreateOfferFood.as_view(), name='offer-create'),
 
 ]
