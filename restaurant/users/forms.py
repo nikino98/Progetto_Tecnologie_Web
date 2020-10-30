@@ -7,7 +7,7 @@ from django.contrib.auth import get_user_model
 from django.db import models
 from django.forms import fields, inlineformset_factory
 
-from users.models import User, Table
+from users.models import User, Table, TakeAway
 
 
 class UserCreateForm(UserCreationForm):
@@ -150,3 +150,16 @@ class ReservationForm(forms.Form):
     #         'date',
     #     )
 
+
+class TakeAwayForm(forms.ModelForm):
+    class Meta:
+        model = TakeAway
+        fields = (
+            'food',
+            'drink',
+        )
+
+        labels = {
+            'food': 'Seleziona cibi:',
+            'drink': 'Seleziona bevande:',
+        }

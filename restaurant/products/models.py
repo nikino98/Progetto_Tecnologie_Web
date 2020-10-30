@@ -28,6 +28,9 @@ class Product(models.Model):
     class Meta:
         abstract = True
 
+    def __str__(self):
+        return f"{self.name} - {self.price}€"
+
 
 class Food(Product):
     image = models.ImageField(default='dishes/no-image-1771002-1505134.png', null=True, blank=True, upload_to='dishes')
@@ -36,12 +39,6 @@ class Food(Product):
     def get_food_count(self):
         return self.objects.count()
 
-    def __str__(self):
-        return self.name
-
 
 class Drink(Product):
     litri = models.DecimalField(max_digits=10, decimal_places=2, validators=[MinValueValidator(Decimal('0.01'))])
-
-    def __str__(self):
-        return self.name

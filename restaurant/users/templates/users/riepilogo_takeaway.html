@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block head %}
+
+{% endblock %}
+
+{% block title %}Prenotazione{% endblock %}
+
+{% block content %}
+    <h2>Il prezzo totale degli articoli è {{ total }} con 2€ di sovrapprezzo per il trasporto!</h2>
+    <form method="post">{% csrf_token %}
+
+    <input type="submit" class="btn btn-success" value="Conferma ordine">
+    <button type="button" class="btn btn-danger" onclick="location.href='{% url 'home' %}'"
+                id="reservation-button">Annulla</button>
+    </form>
+{% endblock %}

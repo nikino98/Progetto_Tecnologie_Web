@@ -2,7 +2,10 @@ from django.contrib.auth.base_user import BaseUserManager, AbstractBaseUser
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
+from django.db.models import Sum
 from django.utils.translation import gettext_lazy as _
+
+from products.models import Food, Drink
 
 
 class CustomUser(BaseUserManager):
@@ -116,3 +119,9 @@ class Table(models.Model):
 
     def __str__(self):
         return f'Tavolo riservato per {self.n_people} a nome {self.reservation_name} {self.reservation_last_name}'
+
+
+class TakeAway(models.Model):
+    food = models.ManyToManyField(Food, help_text='<em>Tenere premuto Ctrl per selezionare più prodotti</em>')
+    drink = models.ManyToManyField(Drink, help_text='<em>Tenere premuto Ctrl per selezionare più prodotti</em>')
+    price = models.DecimalField(max_digits=4, decimal_places=2)

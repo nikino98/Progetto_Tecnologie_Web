@@ -38,6 +38,11 @@
     <p id="submission">
         <button type="button" class="btn btn-default" onclick="location.href='{% url 'users:table-reserve' %}'"
                 id="reservation-button">Prenota un tavolo</button>
+
+        {% if user.is_authenticated %}
+         <button type="button" class="btn btn-default" onclick="location.href='{% url 'users:takeaway' %}'"
+                id="reservation-button">Ordina d'asporto</button>
+        {% endif %}
     </p>
 
 {% endblock %}
