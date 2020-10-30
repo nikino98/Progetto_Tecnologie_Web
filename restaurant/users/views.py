@@ -1,6 +1,6 @@
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, UpdateView, DeleteView, ListView
 from django.contrib.auth import get_user_model, logout, login
@@ -58,10 +58,10 @@ class create_user(CreateView):
 def table_reserved(request):
     if request.method == "POST":
         form = ReservationForm(request.POST)
-        f = form.is_valid()
         if form.is_valid():
-            form.save()
-            return reverse_lazy('home')
+            # form.save() andava anche così e con la funzione save nel form
+            Table.objects.create(**form.cleaned_data)
+            return redirect(reverse_lazy('home'))
         else:
             context = {
                 'form': form,

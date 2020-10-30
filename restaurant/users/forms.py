@@ -131,15 +131,15 @@ class ReservationForm(forms.Form):
     reservation_last_name = forms.CharField(label='Inserisci il cognome per la prenotazione')
     date = forms.DateTimeField(help_text='Inserisci data nel formato YYYY-MM-DD.')
 
-    def save(self):
-        data = self.cleaned_data
-        table = Table(
-            n_people=data['n_people'],
-            reservation_name=data['reservation_name'],
-            reservation_last_name=data['reservation_last_name'],
-            date=data['date']
-        )
-        table.save()
+    # def save(self):
+    #     data = self.cleaned_data
+    #     table = Table(
+    #         n_people=data['n_people'],
+    #         reservation_name=data['reservation_name'],
+    #         reservation_last_name=data['reservation_last_name'],
+    #         date=data['date']
+    #     )
+    #     table.save()
 
     # class Meta:
     #     model = Table
