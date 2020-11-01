@@ -19,45 +19,6 @@ class create_user(CreateView):
     template_name = 'users/user_creation.html'
     success_url = reverse_lazy('home')
 
-    # def get_context_data(self, **kwargs):
-    #     data = super().get_context_data(**kwargs)
-    #     if self.request.POST:
-    #         data['address_form'] = AddressForm(self.request.POST)
-    #     else:
-    #         data['address_form'] = AddressForm()
-    #
-    # def form_valid(self, form):
-    #     context = self.get_context_data()
-    #     address = context['address_form']
-    #     self.object = form.save()
-    #     if address.is_valid():
-    #         address.instance = self.object
-    #         address.save()
-    #     return super().form_valid(form)
-
-
-# @login_required
-# def user_profile(request):
-#     context = {'person': Profile.objects.get(user=request.user)}
-#     return render(request, 'users/profile.html', context)
-
-# def create_user(request):
-#     if request.method == "POST":
-#         form = UserCreateForm(request.POST)
-#         address_form = AddressForm(request.POST)
-#         f = form.is_valid()
-#         f2 = address_form.is_valid()
-#         if all((form.is_valid(), address_form.is_valid())):
-#             user = form.save(commit=False)
-#             address = address_form.save()
-#             user.address = address
-#             user.save()
-#     else:
-#         user_form = UserCreateForm()
-#         address_form = AddressForm()
-#         context = {"user_form": user_form, "address_form": address_form}
-#         return render(request, 'users/user_creation.html', context)
-
 
 def table_reserved(request):
     if request.method == "POST":
@@ -65,7 +26,7 @@ def table_reserved(request):
         if form.is_valid():
             # form.save() andava anche così e con la funzione save nel form
             if request.user.is_authenticated:
-                if request.user.numero_prenotazioni % 1 == 0:
+                if request.user.numero_prenotazioni % 1 == 0:   #ogni 15 prenotazioni ho uno sconto
                     form.cleaned_data["discount"] = 15
 
             Table.objects.create(**form.cleaned_data)
@@ -114,7 +75,7 @@ def create_takeaway(request):
             # form.save() andava anche così e con la funzione save nel form
             #context = {"total": price_food + price_drink}
             #Table.objects.create(**form.cleaned_data)
-            return redirect(reverse_lazy("users:takeaway-redirect", args=(str(price_food + price_drink),food_list,
+            return redirect(reverse_lazy("users:takeaway-redirect", args=(str(price_food + price_drink), food_list,
                                                                           drink_list)))
 
     else:
@@ -137,8 +98,9 @@ def takeaway_redirect(request, total="", food_list="", drink_list=""):
         for i in range(len(drink_list_int)):
             drink_list_int[i] = int(drink_list_int[i])
 
+        total = float(total)
         t = TakeAway()
-        t.price = Decimal(total) + 2
+        t.price = Decimal(total) + Decimal(2)
         t.save()
         t.food.add(*food_list_int)
         t.drink.add(*drink_list_int)

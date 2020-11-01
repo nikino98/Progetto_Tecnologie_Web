@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+
+{% block title %}Accesso negato{% endblock %}
+
+{% block content %}
+    <h1>NON HAI I PERMESSI PER ACCEDERE A QUESTA PAGINA</h1>
+
+    <a href="{% url 'home' %}">Ritorna alla homepage</a>
+{% endblock %}

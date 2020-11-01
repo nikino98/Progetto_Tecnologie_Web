@@ -1,4 +1,6 @@
+from django.contrib.auth.decorators import permission_required, login_required
 from django.core.validators import MinValueValidator
+from django.http import Http404
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse, reverse_lazy
 from django.views.generic import ListView, DetailView, DeleteView, UpdateView
@@ -13,6 +15,23 @@ class ProductListView(ListView):
     template_name = 'products/food/product_list.html'
 
 
+# decoratore per verificare che gli utenti abbiano i permessi di ristoratori
+def is_restaurateur(function):
+    def wrapper(*args, **kwargs):
+        request = args[0]
+        if request is not None:
+            user = request.user
+            try:
+                if user.is_restaurateur:
+                    return function(*args, **kwargs)
+                else:
+                    return render(request, 'users/authentication_error.html', {})
+            except AttributeError:
+                raise Http404   #per utenti anonimi
+    return wrapper
+
+
+@is_restaurateur
 def create_food(request):
     form = CreateProductForm(request.POST, request.FILES)
 
@@ -64,4 +83,3 @@ def modify_product(request, pk):
     }
 
     return render(request, 'products/food/product_update.html', context)
-

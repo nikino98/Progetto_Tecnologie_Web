@@ -3,6 +3,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
 from django.db.models import Sum
+from django.http import HttpResponseRedirect
 from django.utils.translation import gettext_lazy as _
 
 from products.models import Food, Drink
@@ -92,8 +93,11 @@ class User(AbstractBaseUser):
     def is_superuser(self):
         return self.is_admin
 
-    def has_perm(self, perm, obj=None):
-        return True
+    def has_perms(self, perm, obj=None):
+        if self.is_restaurateur:
+            return True
+        else:
+            return HttpResponseRedirect('')
 
     def has_module_perms(self, app_label):
         return True
@@ -124,4 +128,4 @@ class Table(models.Model):
 class TakeAway(models.Model):
     food = models.ManyToManyField(Food, help_text='<em>Tenere premuto Ctrl per selezionare più prodotti</em>')
     drink = models.ManyToManyField(Drink, help_text='<em>Tenere premuto Ctrl per selezionare più prodotti</em>')
-    price = models.DecimalField(max_digits=4, decimal_places=2)
+    price = models.DecimalField(max_digits=40, decimal_places=2)
