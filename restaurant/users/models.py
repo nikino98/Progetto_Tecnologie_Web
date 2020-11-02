@@ -1,4 +1,5 @@
 from django.contrib.auth.base_user import BaseUserManager, AbstractBaseUser
+from django.contrib.auth.models import PermissionsMixin
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
@@ -60,7 +61,7 @@ class CustomUser(BaseUserManager):
 #         verbose_name_plural = 'Addresses'
 
 
-class User(AbstractBaseUser):
+class User(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(max_length=60, unique=True)
     first_name = models.CharField(max_length=60)
     last_name = models.CharField(max_length=60)
@@ -93,17 +94,12 @@ class User(AbstractBaseUser):
     def is_superuser(self):
         return self.is_admin
 
-    def has_perms(self, perm, obj=None):
-        if self.is_restaurateur:
-            return True
-        else:
-            return HttpResponseRedirect('')
-
     def has_module_perms(self, app_label):
         return True
 
     @property
     def numero_prenotazioni(self):
+        prenotazioni = self.prenotazioni.all().count()
         return self.prenotazioni.all().count()
 
     class Meta:

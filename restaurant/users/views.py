@@ -26,10 +26,12 @@ def table_reserved(request):
         if form.is_valid():
             # form.save() andava anche così e con la funzione save nel form
             if request.user.is_authenticated:
-                if request.user.numero_prenotazioni % 1 == 0:   #ogni 15 prenotazioni ho uno sconto
+                if request.user.numero_prenotazioni % 15 == 0:   #ogni 15 prenotazioni ho uno sconto
                     form.cleaned_data["discount"] = 15
 
-            Table.objects.create(**form.cleaned_data)
+            t = Table.objects.create(**form.cleaned_data)
+            t.user = request.user
+            t.save()
             return redirect(reverse_lazy('home'))
         else:
             context = {
@@ -51,7 +53,7 @@ def table_reserved(request):
 
 def profile_view(request):
     user = request.user
-    return render(request, 'users/profile.html', {'user':user})
+    return render(request, 'users/profile.html', {'user': user})
 
 
 def create_takeaway(request):

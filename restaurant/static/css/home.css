@@ -14,7 +14,7 @@
 #reservation-button{
     alignment: bottom;
     color: white;
-    background-color: orange;
+    background-color: #9a2303;
 
 }
 
@@ -26,6 +26,7 @@
     bottom: 0;
     right: 0px;
     z-index: -1; /*per mettere lo slideshow sullo sfondo*/
+    overflow-y: hidden;
 }
 
 #user-options {
