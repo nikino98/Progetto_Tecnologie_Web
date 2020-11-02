@@ -18,7 +18,9 @@
                 <th scope="col">Descrizione</th>
                 <th scope="col">Ingredienti</th>
                 <th scope="col">Prezzo</th>
-                <th scope="col">Azioni</th>
+                {% if user.is_restaurateur %}
+                    <th scope="col">Azioni</th>
+                {% endif %}
             </tr>
             </thead>
             <tbody>
@@ -41,9 +43,10 @@
                     <td>{{ item.price }}</td>
                     <td>
 {#                        <button type="button" class="btn btn-warning" onclick="location.href='{% url 'products:product-create' %}'" id="create-button">Crea</button>#}
-                        <button type="button" class="btn btn-info" onclick="location.href='{% url 'products:product-update'  item.id %}'" id="update-button">Modifica</button>
-                        <button type="button" class="btn btn-danger" onclick="location.href='{% url 'products:product-delete'  item.id %}'" id="delete-button">Elimina</button>
-
+                        {% if user.is_restaurateur %}
+                            <button type="button" class="btn btn-info" onclick="location.href='{% url 'products:product-update'  item.id %}'" id="update-button">Modifica</button>
+                            <button type="button" class="btn btn-danger" onclick="location.href='{% url 'products:product-delete'  item.id %}'" id="delete-button">Elimina</button>
+                        {% endif %}
                         {#                            <script>#}
                         {#                                function deleteFunction(){#}
                         {#                                    var#}

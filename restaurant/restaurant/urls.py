@@ -31,7 +31,7 @@ urlpatterns = [
     path('offers/', include('offers.urls')),
     # path('users2/', include('users2.urls')),
 
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 # per le immagini
 # if settings.DEBUG:

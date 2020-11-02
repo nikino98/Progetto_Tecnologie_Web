@@ -3,6 +3,7 @@ from django.core.validators import MinValueValidator
 from django.http import Http404
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse, reverse_lazy
+from django.utils.decorators import method_decorator
 from django.views.generic import ListView, DetailView, DeleteView, UpdateView
 from .models import Food
 from .forms import CreateProductForm, UpdateProductForm
@@ -56,13 +57,14 @@ def create_food(request):
 #     }
 #     return render(request, 'products/food/product_list.html', context)
 
+@method_decorator(is_restaurateur, name='dispatch')
 class DeleteProduct(DeleteView):
     model = Food
     template_name = 'products/food/product_delete.html'
     success_url = reverse_lazy('products:product-list')
 
 
-# FUNZIONA
+@is_restaurateur
 def modify_product(request, pk):
     form = UpdateProductForm(request.POST, request.FILES)
     food = get_object_or_404(Food, pk=pk)
