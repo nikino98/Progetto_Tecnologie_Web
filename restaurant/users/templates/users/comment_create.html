@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}Commenta{% endblock %}
+
+{% block content %}
+    {% if error %}
+        <div class="alert-danger">C'è stato un errore nel commento!!</div>
+    {% endif %}
+
+    <form method="post">{% csrf_token %}
+        {{ form | crispy }}
+        <input type="submit" value="Salva commento">
+    </form>
+{% endblock %}

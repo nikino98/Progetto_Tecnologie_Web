@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+
+{% block title %}Lista dei commenti{% endblock %}
+
+{% block content %}
+    {% for comment in comments %}
+         <div class="card mt-2">
+         <div class="card-header">
+            <div class="d-flex justify-content-between">
+                        {{ comment.user.first_name }} {{ comment.user.last_name }}
+            </div>
+        </div>
+            <div class="card-body mt-2">
+
+                <div class="d-flex justify-content-center">
+                    {{ comment.description }}
+                </div>
+            </div>
+         </div>
+    {% endfor %}
+{% endblock %}

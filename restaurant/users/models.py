@@ -125,3 +125,25 @@ class TakeAway(models.Model):
     food = models.ManyToManyField(Food, help_text='<em>Tenere premuto Ctrl per selezionare più prodotti</em>')
     drink = models.ManyToManyField(Drink, help_text='<em>Tenere premuto Ctrl per selezionare più prodotti</em>')
     price = models.DecimalField(max_digits=40, decimal_places=2)
+
+
+class Review(models.Model):
+    CHOICES = (
+        (1, 'Una stella'),
+        (2, 'Due stelle'),
+        (3, 'Tre stelle'),
+        (4, 'Quattro stelle'),
+        (5, 'Cinque stelle'),
+
+    )
+    user = models.OneToOneField(User, on_delete=models.CASCADE, unique=True, related_name='review')
+    rating = models.IntegerField(choices=CHOICES, default=3)
+    comment = models.CharField(max_length=100, blank=True, null=True)
+    date = models.DateTimeField(auto_now=True)
+
+
+class Comment(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='comment')
+    review = models.ForeignKey(Review, on_delete=models.CASCADE, related_name='comments')
+    description = models.CharField(max_length=100)
+

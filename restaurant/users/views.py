@@ -8,8 +8,8 @@ from django.views.generic import CreateView, UpdateView, DeleteView, ListView
 from django.contrib.auth import get_user_model, logout, login
 
 from products.models import Food, Drink
-from .forms import UserCreateForm, ReservationForm, TakeAwayForm
-from .models import BaseUserManager, Table, User, TakeAway
+from .forms import UserCreateForm, ReservationForm, TakeAwayForm, CommentForm
+from .models import BaseUserManager, Table, User, TakeAway, Review, Comment
 
 tot_table = 100  # numero di coperti
 
@@ -109,4 +109,52 @@ def takeaway_redirect(request, total="", food_list="", drink_list=""):
 
         return redirect(reverse_lazy('home'))
     else:
-        return render(request, 'users/riepilogo_takeaway.html', {"total":total})
+        return render(request, 'users/riepilogo_takeaway.html', {"total": total})
+
+
+def review_list(request):
+    return render(request, 'users/user_review.html', {'reviews': Review.objects.all().order_by('date')})
+
+
+def review_create_ajax(request):
+    if request.POST:
+        rating = int(request.POST.get('numero_stelle'))
+        review_comment = request.POST.get('review_comment')
+        user_pk = request.POST.get('user')
+        user = User.objects.get(pk=user_pk)
+        review = Review(rating=rating, comment=review_comment, user=user)
+        review.save()
+        return render(request, "users/new_review.html", {"review": review})
+
+
+def comment_create(request, **kwargs):
+    if request.method == "POST":
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            t = Comment(**form.cleaned_data)
+            t.user = request.user
+            review_pk = kwargs.get("review_pk", False)
+            review = Review.objects.get(pk=review_pk)
+            t.review = review
+            t.save()
+            return redirect(reverse_lazy('home'))
+        else:
+            context = {
+                'form': form,
+                'error': True,
+            }
+            return render(request, 'users/comment_create.html', context)
+    else:
+        form = CommentForm()
+        context = {
+            'form': form
+        }
+        return render(request, 'users/comment_create.html', context)
+
+def comment_list(request, **kwargs):
+
+    review_pk = kwargs.get("review_pk", False)
+    review = Review.objects.get(pk=review_pk)
+    comments = Comment.objects.filter(review=review_pk)
+    context = {"comments": comments}
+    return render(request, 'users/comment_list.html', context)

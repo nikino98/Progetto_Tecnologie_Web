@@ -7,7 +7,7 @@ from django.contrib.auth import get_user_model
 from django.db import models
 from django.forms import fields, inlineformset_factory
 
-from users.models import User, Table, TakeAway
+from users.models import User, Table, TakeAway, Comment
 
 
 class UserCreateForm(UserCreationForm):
@@ -163,3 +163,16 @@ class TakeAwayForm(forms.ModelForm):
             'food': 'Seleziona cibi:',
             'drink': 'Seleziona bevande:',
         }
+
+
+class CommentForm(forms.ModelForm):
+    class Meta:
+        model = Comment
+        fields = (
+            'description',
+        )
+
+        labels = {
+            'description': 'Lascia un commento'
+        }
+

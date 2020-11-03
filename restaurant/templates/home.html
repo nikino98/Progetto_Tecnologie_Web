@@ -54,6 +54,7 @@
         {% if user.is_authenticated %}
             <a href={% url 'offers:offers-list' %}>Vedi le offerte</a>
         {% endif %}
+        <a href={% url 'users:review-list' %}>Vai alle recensioni</a>
     </div>
     <div class="topcorner">
         {% if not user.is_authenticated %}

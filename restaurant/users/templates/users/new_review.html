@@ -1,0 +1,20 @@
+<div class="card mt-2">
+    <div class="card-body mt-2">
+        <div class="d-flex justify-content-between">
+            <div>
+                {{ review.user.first_name }} {{ review.user.last_name }}, {{ review.date }}
+            </div>
+            <div>
+                {% for i in '12345'|make_list %}
+                    {% if forloop.counter <=  review.rating %}
+                        <i class="far fa-star"></i>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+        <div class="d-flex justify-content-center">
+            {{ review.comment }}
+        </div>
+    </div>
+
+</div>

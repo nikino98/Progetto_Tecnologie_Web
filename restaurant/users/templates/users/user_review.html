@@ -1,0 +1,122 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+
+{% block title %}
+
+{% endblock %}
+
+{% block content %}
+
+
+    <div class="row">
+        <div class="col"></div>
+        <div class="col-10">
+        {% if user.is_authenticated %}
+            {% if not user.review %}
+                <form method="post" id="form-review" class="form-inline">{% csrf_token %}
+                            <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css" rel="stylesheet"/>
+                            <select name="rating" id="rating" style="font-family: 'FontAwesome'" class="mr-2">
+                            <option value="1">&#xf005;</option>
+                            <option value="2">&#xf005;&#xf005;</option>
+                            <option value="3">&#xf005;&#xf005;&#xf005;</option>
+                            <option value="4">&#xf005;&#xf005;&#xf005;&#xf005;</option>
+                            <option value="5">&#xf005;&#xf005;&#xf005;&#xf005;&#xf005;</option>
+                         </select>
+                    <input type="text" id="commento" name="Commento" placeholder="Lascia un commento" class="mr-2 ml-2" maxlength="100">
+                <input type="submit" value="Salva Recensione" class="btn btn-success">
+                </form>
+            {% endif %}
+            {% endif %}
+                <div id="contenuto">
+
+
+                    {% for review in reviews %}
+                        <div class="card mt-2">
+                        <div class="card-header">
+                            <div class="d-flex justify-content-between">
+                            <div>
+                                        {{ review.user.first_name }} {{ review.user.last_name }}, {{ review.date }}
+                            </div>
+                                <div>
+                                        {% for i in '12345'|make_list %}
+                                            {% if forloop.counter <=  review.rating %}
+                                                <i class="far fa-star"></i>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </div>
+                            </div>
+                        </div>
+                            <div class="card-body mt-2">
+
+
+                                
+                                <div class="d-flex justify-content-center">
+                                    {{ review.comment }}
+                                </div>
+                            </div>
+                        <footer class="border-top">
+                            {% if user.is_authenticated %}
+                                <a href="{% url 'users:comment-create' review.pk %}" class="btn btn-outline-success">Lascia un commento</a>
+                                <a href="{% url 'users:comment-list' review.pk %}" class="btn-outline-info">Vedi commenti</a>
+                            {% endif %}
+                        </footer>
+                        </div>
+                    {% endfor %}
+
+                </div>
+
+        </div>
+         <div class="col"></div>
+    </div>
+{% endblock %}
+
+{% block javascript %}
+    <script>
+{#    manda il csfr token alla chiamata ajax#}
+    function getCookie(name) {
+            var cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                var cookies = document.cookie.split(';');
+                for (var i = 0; i < cookies.length; i++) {
+                    var cookie = cookies[i].trim();
+                    // Does this cookie string begin with the name we want?
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+        var csrftoken = getCookie('csrftoken');
+        $(function () {
+            $.ajaxSetup({
+                headers: { "X-CSRFToken": csrftoken }
+            });
+        });
+
+        function create_post(){
+            $.ajax({
+                url: "{% url 'users:review-create' %}",
+                type: "POST",
+                data: {
+                    review_comment: $('#commento').val(),
+                    numero_stelle: $('#rating').val(),
+                    user: {{ user.pk }},
+                },
+                success : function (result){
+                    $('#contenuto').prepend(result);
+                    $('#form-review').remove();
+
+                },
+            });
+        };
+
+        $('#form-review').on('submit', function (event){
+            event.preventDefault();
+            console.log("form submitted!")
+            create_post();
+        });
+        </script>
+{% endblock %}
