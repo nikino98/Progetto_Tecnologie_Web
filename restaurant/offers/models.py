@@ -5,7 +5,7 @@ from products.models import Product, Food, Drink
 
 
 class Offer(models.Model):
-    code = models.CharField(max_length=30)
+    code = models.CharField(max_length=30, unique=True)
     discount = models.PositiveIntegerField(default=10, help_text="Inserire l'ammontare dello sconto senza percentuale!",
                                            validators=[MinValueValidator(1), MaxValueValidator(100)])
 

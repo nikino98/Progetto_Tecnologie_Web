@@ -4,6 +4,9 @@
 {% block title %}Lista dei commenti{% endblock %}
 
 {% block content %}
+    {% if comments|length == 0 %}
+        <div class="alert-info"><h2 style="text-align: center">Nessun commento!</h2></div>
+    {% endif %}
     {% for comment in comments %}
          <div class="card mt-2">
          <div class="card-header">

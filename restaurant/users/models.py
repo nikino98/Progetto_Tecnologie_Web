@@ -1,7 +1,7 @@
 from django.contrib.auth.base_user import BaseUserManager, AbstractBaseUser
 from django.contrib.auth.models import PermissionsMixin
 from django.core.exceptions import ObjectDoesNotExist
-from django.core.validators import MinValueValidator, MaxValueValidator
+from django.core.validators import MinValueValidator, MaxValueValidator, RegexValidator
 from django.db import models
 from django.db.models import Sum
 from django.http import HttpResponseRedirect
@@ -62,18 +62,19 @@ class CustomUser(BaseUserManager):
 
 
 class User(AbstractBaseUser, PermissionsMixin):
-    email = models.EmailField(max_length=60, unique=True)
-    first_name = models.CharField(max_length=60)
-    last_name = models.CharField(max_length=60)
-    region = models.CharField(max_length=35)
-    province = models.CharField(max_length=30)
-    cap = models.CharField(max_length=5)
-    city = models.CharField(max_length=50)
-    via = models.CharField(max_length=50)
-    house_number = models.CharField(max_length=10)
-    piano = models.CharField(max_length=30, blank=True)
-    note = models.TextField(blank=True)
-    tel = models.CharField(max_length=20)
+    email = models.EmailField(max_length=60, unique=True, verbose_name='Email:')
+    first_name = models.CharField(max_length=60, verbose_name='Nome:')
+    last_name = models.CharField(max_length=60, verbose_name='Cognome:')
+    region = models.CharField(max_length=35, verbose_name='Regione:')
+    province = models.CharField(max_length=30, verbose_name='Provincia:')
+    cap = models.CharField(max_length=5, verbose_name='CAP:')
+    city = models.CharField(max_length=50, verbose_name='Città:')
+    via = models.CharField(max_length=50, verbose_name='Via:')
+    house_number = models.CharField(max_length=10, verbose_name='Numero civico:')
+    piano = models.CharField(max_length=30, blank=True, verbose_name='Piano:')
+    note = models.TextField(blank=True, verbose_name='Note:')
+    tel_regex = RegexValidator(regex=r'^\+?1?\d{10,10}$', message=('Numero di telefono errato!'))
+    tel = models.CharField(validators=[tel_regex], max_length=10, verbose_name='Telefono:')
     is_admin = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
@@ -122,8 +123,10 @@ class Table(models.Model):
 
 
 class TakeAway(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, related_name='takeaways')
     food = models.ManyToManyField(Food, help_text='<em>Tenere premuto Ctrl per selezionare più prodotti</em>')
     drink = models.ManyToManyField(Drink, help_text='<em>Tenere premuto Ctrl per selezionare più prodotti</em>')
+    date = models.DateTimeField(auto_now=True)
     price = models.DecimalField(max_digits=40, decimal_places=2)
 
 

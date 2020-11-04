@@ -33,43 +33,98 @@
     <span class="sr-only">Next</span>
   </a>
 </div>
+{#---------------------------------------------  FINE SLIDESHOW ------------------------------------------#}
 
-    <h1>Ristorante pizzeria</h1>
-    <br>
+
+
+
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="#"><h1>Ristorante pizzeria</h1></a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'products:product-list' %}">Menù<span class="sr-only">(current)</span></a>
+      </li>
+        {% if not user.is_authenticated %}
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'users:user-creation' %}">Registrati</a>
+            </li>
+        {% endif %}
+    {% if user.is_restaurateur %}
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Crea offerta
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" href="{% url 'offers:offer-create-food'%}">Cibi</a>
+          <a class="dropdown-item" href="{% url 'offers:offer-create-drink' %}">Bevande</a>
+        </div>
+      </li>
+    {% endif %}
 
     {% if user.is_authenticated %}
-        <h4>Benvenuto {{ user.first_name | capfirst }}!!</h4>
+        <li class="nav-item">
+        <a class="nav-link" href="{% url 'offers:offers-list'%}">Vedi le offerte</a>
+      </li>
     {% endif %}
-    <div id="user-options">
-        <a href={% url 'products:product-list' %}>Menù</a>
-        {% if not user.is_authenticated %}
-            <a href={% url 'users:user-creation' %}>Registrati</a>
-        {% endif %}
-        {% if user.is_authenticated %}
-            <a href={% url 'users:user-profile' %}>Visita il tuo profilo</a>
-        {% endif %}
-        {% if user.is_restaurateur %}
-            <a href={% url 'offers:offer-create'%}>Crea offerta</a>
-        {% endif %}
-        {% if user.is_authenticated %}
-            <a href={% url 'offers:offers-list' %}>Vedi le offerte</a>
-        {% endif %}
-        <a href={% url 'users:review-list' %}>Vai alle recensioni</a>
-    </div>
-    <div class="topcorner">
-        {% if not user.is_authenticated %}
-            <a href={% url 'users:login' %}>Login</a>
-        {% else %}
-            <a href={% url 'users:logout' %}>Logout</a>
-        {% endif %}
-    </div>
+    {% if user.is_authenticated %}
+        <li class="nav-item">
+        <a class="nav-link" href="{% url 'users:user-profile'%}">Visita il tuo profilo</a>
+      </li>
+    {% endif %}
+        <li class="nav-item">
+        <a class="nav-link" href="{% url 'users:review-list' %}">Vai alle recensioni</a>
+      </li>
+    </ul>
+
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item ">
+                {% if not user.is_authenticated %}
+                <a class="nav-link" href={% url 'users:login' %}><i class="fas fa-sign-in-alt"></i> Login</a>
+            {% else %}
+                    <a class="nav-link" href={% url 'users:logout' %}><i class="fas fa-sign-out-alt"></i> Logout</a>
+            {% endif %}
+            </li>
+
+         </ul>
+  </div>
+</nav>
+
+{#    <h1>Ristorante pizzeria</h1>#}
+{#    <br>#}
+
+    {% if user.is_authenticated %}
+        <h4 class="mt-2">Benvenuto {{ user.first_name | capfirst }}!!</h4>
+    {% endif %}
+{#    <div id="user-options">#}
+{#        <a href={% url 'products:product-list' %}>Menù</a>#}
+{#        {% if not user.is_authenticated %}#}
+{#            <a href={% url 'users:user-creation' %}>Registrati</a>#}
+{#        {% endif %}#}
+{#        {% if user.is_authenticated %}#}
+{#            <a href={% url 'users:user-profile' %}>Visita il tuo profilo</a>#}
+{#        {% endif %}#}
+{#        {% if user.is_restaurateur %}#}
+{#            <a href={% url 'offers:offer-create'%}>Crea offerta</a>#}
+{#        {% endif %}#}
+{#        {% if user.is_authenticated %}#}
+{#            <a href={% url 'offers:offers-list' %}>Vedi le offerte</a>#}
+{#        {% endif %}#}
+{#        <a href={% url 'users:review-list' %}>Vai alle recensioni</a>#}
+{#    </div>#}
+
     <p id="submission">
         <button type="button" class="btn btn-default" onclick="location.href='{% url 'users:table-reserve' %}'"
                 id="reservation-button">Prenota un tavolo</button>
 
         {% if user.is_authenticated %}
             <button type="button" class="btn btn-default" onclick="location.href='{% url 'users:takeaway' %}'"
-                id="reservation-button">Ordina d'asporto</button>
+                id="takeaway-button">Ordina d'asporto</button>
         {% endif %}
     </p>
 

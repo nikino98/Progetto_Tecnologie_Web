@@ -35,12 +35,15 @@ def is_restaurateur(function):
 @is_restaurateur
 def create_food(request):
     form = CreateProductForm(request.POST, request.FILES)
-
     if form.is_valid():
         form.save()
         redirect_url = reverse('products:product-list')
-        messages.success(request, 'Prodotto inserito correttamente')
         return redirect(redirect_url)
+    else:
+        context = {
+            'form': form,
+            'error': True
+        }
 
     context = {
         'form': form,

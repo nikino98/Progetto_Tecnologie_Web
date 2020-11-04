@@ -18,6 +18,24 @@
 
 }
 
+#reservation-button:hover {
+    color: #9a2303;
+    background-color: white;
+}
+
+#takeaway-button{
+    alignment: bottom;
+    color: white;
+    background-color: #9a2303;
+
+}
+
+#takeaway-button:hover{
+     color: #9a2303;
+    background-color: white;
+}
+
+
 
 #carouselExampleIndicators{
     position: absolute;
@@ -32,6 +50,5 @@
 #user-options {
     z-index: 10;
 }
-
 
 

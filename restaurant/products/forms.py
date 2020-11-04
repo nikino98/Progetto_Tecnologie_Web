@@ -25,6 +25,7 @@ class CreateProductForm(forms.ModelForm):
     #     Submit('save', 'Salva')
     # )
     # helper.add_input(Submit('salva', 'Salva'))
+    price = forms.DecimalField(min_value=0.5, label='Inserisci il prezzo del prodotto:')
 
     class Meta:
         model = Food
@@ -46,6 +47,8 @@ class CreateProductForm(forms.ModelForm):
 
 
 class UpdateProductForm(forms.ModelForm):
+    price = forms.DecimalField(min_value=0.5)
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.helper = FormHelper()

@@ -1,7 +1,8 @@
 from decimal import Decimal
+from sqlite3.dbapi2 import Date
 
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, UpdateView, DeleteView, ListView
@@ -53,7 +54,50 @@ def table_reserved(request):
 
 def profile_view(request):
     user = request.user
-    return render(request, 'users/profile.html', {'user': user})
+    prenotazioniDopo = user.prenotazioni.filter(date__gt=Date.today())
+    prenotazioniPrima = user.prenotazioni.filter(date__lt=Date.today())
+    takeaways = user.takeaways.all()
+    return render(request, 'users/profile.html', {'user': user, 'prenotazioniDopo': prenotazioniDopo, 'prenotazioniPrima': prenotazioniPrima, 'takeaways': takeaways})
+
+
+class UpdateUser(UpdateView):
+    model = User
+    template_name = 'users/user_modify.html'
+    success_url = reverse_lazy('users:user-profile')
+
+    fields = (
+        'first_name',
+        'last_name',
+        'email',
+        'tel',
+        'region',
+        'province',
+        'cap',
+        'city',
+        'via',
+        'house_number',
+        'piano',
+        'note'
+    )
+
+    labels = {
+        'first_name': 'Inserisci il nuovo nome:',
+        'last_name': 'Inserisci il nuovo cognome',
+        'email': 'Inserisci la nuova mail:',
+        'tel': 'Inserisci il nuovo numero di telefono:',
+        'region': 'Inserisci la nuova regione:',
+        'province': 'Inserisci la nuova provincia:',
+        'cap': 'Inserisci il nuovo CAP:',
+        'city': 'Inserisci la nuova città:',
+        'via': 'Inserisci la nuova via:',
+        'house_number': 'Inserisci il nuovo numero di casa',
+        'piano': 'Inserisci il nuovo piano',
+        'note': 'Inserisci le note:'
+    }
+
+    def get_object(self, queryset=None):
+        obj = User.objects.get(id=self.kwargs['id'])
+        return obj
 
 
 def create_takeaway(request):
@@ -102,6 +146,7 @@ def takeaway_redirect(request, total="", food_list="", drink_list=""):
 
         total = float(total)
         t = TakeAway()
+        t.user = request.user
         t.price = Decimal(total) + Decimal(2)
         t.save()
         t.food.add(*food_list_int)
@@ -151,10 +196,17 @@ def comment_create(request, **kwargs):
         }
         return render(request, 'users/comment_create.html', context)
 
-def comment_list(request, **kwargs):
 
+def comment_list(request, **kwargs):
     review_pk = kwargs.get("review_pk", False)
     review = Review.objects.get(pk=review_pk)
     comments = Comment.objects.filter(review=review_pk)
     context = {"comments": comments}
     return render(request, 'users/comment_list.html', context)
+
+
+def delete_prenotazione(request):
+    prenotazione_pk = request.POST.get('prenotazione_pk')
+    prenotazione = Table.objects.get(pk=prenotazione_pk)
+    prenotazione.delete()
+    return HttpResponse(prenotazione_pk)

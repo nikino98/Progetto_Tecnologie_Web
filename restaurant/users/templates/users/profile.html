@@ -7,5 +7,181 @@
 
 
 {% block content %}
-    <h2>Benvenuto nel tuo profilo {{ user.first_name }}!!</h2>
+    <div class="card text-center" >
+
+        <div class="card-body">
+            <h5 class="card-title border-bottom pb-2">{{ user.email }}</h5>
+            <div class="d-flex justify-content-between">
+                <p class="font-weight-light">Nome: </p>
+                <p class="font-weight-bold">{{ user.first_name }}</p>
+            </div>
+            <div class="d-flex justify-content-between">
+                <p class="font-weight-light">Cognome: </p>
+                <p class="font-weight-bold">{{ user.last_name }}</p>
+            </div>
+            <div class="d-flex justify-content-between">
+                <p class="font-weight-light">Indirizzo: </p>
+                <p class="font-weight-bold">{{ user.via }}, {{ user.house_number }}, Piano {{ user.piano }} {{ user.cap }},  {{ user.province }}</p>
+            </div>
+            <div class="d-flex justify-content-between">
+                <p class="font-weight-light">Regione: </p>
+                <p class="font-weight-bold">{{ user.region }}</p>
+            </div>
+            <div class="d-flex justify-content-between">
+                <p class="font-weight-light">Telefono: </p>
+                <p class="font-weight-bold">{{ user.tel }}</p>
+            </div>
+            <p class="border-top"><strong>Note</strong></p>
+            {{ user.note }}
+
+  </div>
+    <div class="card-footer"><a href= "{% url 'home' %}" class="btn btn-danger mr-2">Indietro</a><a href="{% url 'users:profile-update' user.id %}" class="btn btn-primary">Modifica</a></div>
+</div>
+
+{#    CARTA PRENOTAZIONI#}
+   {% if prenotazioniDopo|length != 0 or prenotazioniPrima|length != 0 %}
+    <div class="card text-center">
+  <div class="card-body">
+  <div class="row">
+  {% if prenotazioniPrima|length != 0 %}
+      <div class="col ">
+          <h5 class="card-title pb-2 border-bottom">Storico prenotazioni</h5>
+            {% for prenotazione in prenotazioniPrima %}
+                <div class="border-bottom">
+               <div class="d-flex justify-content-between ">
+                            <p class="font-weight-light">Data: </p>
+                            <p class="font-weight-bold">{{ prenotazione.date}}</p>
+                        </div>
+
+                   <div class="d-flex justify-content-between ">
+                            <p class="font-weight-light">Numero di posti: </p>
+                            <p class="font-weight-bold">{{ prenotazione.n_people}}</p>
+                        </div>
+
+                    {% if prenotazione.discount != 0 %}
+                   <div class="d-flex justify-content-between ">
+                            <p class="font-weight-light">Sconto: </p>
+                            <p class="font-weight-bold">{{ prenotazione.discount}}%</p>
+                        </div>
+                    {% endif %}
+                </div>
+              {% endfor %}
+      </div>
+  {% endif %}
+  {% if prenotazioniDopo|length != 0 %}
+      <div class="col border-left">
+          <h5 class="card-title pb-2 border-bottom ">Prenotazioni</h5>
+
+                {% for prenotazione in prenotazioniDopo %}
+                    <div class="border-bottom" id="prenotazione{{prenotazione.pk}}">
+                   <div class="d-flex justify-content-between ">
+                            <p class="font-weight-light">Data: </p>
+                            <p class="font-weight-bold">{{ prenotazione.date}}</p>
+                        </div>
+
+                   <div class="d-flex justify-content-between ">
+                            <p class="font-weight-light">Numero di posti: </p>
+                            <p class="font-weight-bold">{{ prenotazione.n_people}}</p>
+                        </div>
+
+                    {% if prenotazione.discount != 0 %}
+                   <div class="d-flex justify-content-between ">
+                            <p class="font-weight-light">Sconto: </p>
+                            <p class="font-weight-bold">{{ prenotazione.discount}}%</p>
+                        </div>
+                    {% endif %}
+                    <button class="mb-3 btn btn-danger " onclick="delete_post({{ prenotazione.pk }})">Elimina prenotazione</button>
+                    </div>
+                  {% endfor %}
+
+      </div>
+  {% endif %}
+  </div>
+
+  </div>
+</div>
+{% endif %}
+{#    TAKEAWAY#}
+    {% if takeaways|length != 0 %}
+     <div class="card text-center">
+  <div class="card-body">
+  <div class="row">
+      <div class="col ">
+          <h5 class="card-title pb-2 border-bottom">Storico ordini d'asporto</h5>
+
+            {% for takeaway in takeaways %}
+                <div class="border-bottom">
+
+                            <p class="font-weight-light">Data: </p>
+                            <p class="font-weight-bold">{{ takeaway.date}}</p>
+
+                    <p class="font-weight-light">Cibi: </p>
+
+
+                            {% for food in takeaway.food.all %}
+                                <p></p>
+                                <p class="font-weight-bold">{{ food }}</p>
+                            {% endfor %}
+
+
+
+                            <p class="font-weight-light">Drink: </p>
+                            {% for drink in takeaway.drink.all %}
+                                <p class="font-weight-bold">{{ drink }}</p>
+                            {% endfor %}
+
+
+                        <p class="font-weight-light">Totale ordine: </p>
+                        <p class="font-weight-bold">{{ takeaway.price}}€</p>
+
+
+                </div>
+           {% endfor %}
+
+      </div>
+    {% endif %}
+
+{% endblock %}
+
+{% block javascript %}
+    <script>
+{#    manda il csfr token alla chiamata ajax#}
+    function getCookie(name) {
+            var cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                var cookies = document.cookie.split(';');
+                for (var i = 0; i < cookies.length; i++) {
+                    var cookie = cookies[i].trim();
+                    // Does this cookie string begin with the name we want?
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+        var csrftoken = getCookie('csrftoken');
+        $(function () {
+            $.ajaxSetup({
+                headers: { "X-CSRFToken": csrftoken }
+            });
+        });
+
+        function delete_post(pk){
+            $.ajax({
+                url: "{% url 'users:prenotazione-delete' %}",
+                type: "POST",
+                data: {
+                    prenotazione_pk: pk
+                },
+                success : function (result){
+                    $('#prenotazione'.concat(pk.toString())).remove();
+
+                },
+            });
+        };
+
+        </script>
+
 {% endblock %}

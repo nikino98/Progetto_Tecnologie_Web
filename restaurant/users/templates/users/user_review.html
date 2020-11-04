@@ -50,7 +50,7 @@
                             <div class="card-body mt-2">
 
 
-                                
+
                                 <div class="d-flex justify-content-center">
                                     {{ review.comment }}
                                 </div>
@@ -58,7 +58,7 @@
                         <footer class="border-top">
                             {% if user.is_authenticated %}
                                 <a href="{% url 'users:comment-create' review.pk %}" class="btn btn-outline-success">Lascia un commento</a>
-                                <a href="{% url 'users:comment-list' review.pk %}" class="btn-outline-info">Vedi commenti</a>
+                                <a href="{% url 'users:comment-list' review.pk %}" class="btn btn-outline-info">Vedi commenti</a>
                             {% endif %}
                         </footer>
                         </div>
