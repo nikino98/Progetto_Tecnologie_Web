@@ -21,7 +21,7 @@ class Ingredient(models.Model):
 
 class Product(models.Model):
     name = models.CharField(max_length=80)
-    description = models.TextField()
+    description = models.TextField(null=True, blank=True)
     MinValueValidator.message = "Il prezzo del prodotto deve essere maggiore o uguale a 0!!"
     price = models.DecimalField(max_digits=10, decimal_places=2, validators=[MinValueValidator(Decimal('0.01'))])
 

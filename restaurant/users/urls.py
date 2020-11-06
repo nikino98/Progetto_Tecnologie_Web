@@ -3,7 +3,7 @@ from django.urls import path
 from django.contrib.auth import views as auth_views
 from restaurant import views
 from users.views import create_user, table_reserved, profile_view, create_takeaway, takeaway_redirect, review_list, \
-    review_create_ajax, comment_create, comment_list, UpdateUser, delete_prenotazione
+    review_create_ajax, comment_create, comment_list, UpdateUser, delete_prenotazione, restaurateur_view
 
 app_name = 'users'
 
@@ -20,6 +20,7 @@ urlpatterns = [
     path('comment_create/<int:review_pk>', comment_create, name='comment-create'),
     path('comment_list/<int:review_pk>', comment_list, name='comment-list'),
     path('profile/modify/<int:id>', UpdateUser.as_view(), name='profile-update'),
-    path('prenotazione_delete/', delete_prenotazione, name='prenotazione-delete')
+    path('prenotazione_delete/', delete_prenotazione, name='prenotazione-delete'),
+    path('lista_prenotazioni/', restaurateur_view, name='prenotazione-list')
 
 ]

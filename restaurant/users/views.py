@@ -1,18 +1,38 @@
+
 from decimal import Decimal
 from sqlite3.dbapi2 import Date
 
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponseRedirect, HttpResponse
+
+from django.http import HttpResponseRedirect, HttpResponse, Http404
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse_lazy
+from django.utils.datetime_safe import datetime
+from django.utils.decorators import method_decorator
 from django.views.generic import CreateView, UpdateView, DeleteView, ListView
 from django.contrib.auth import get_user_model, logout, login
 
 from products.models import Food, Drink
+from products.views import is_restaurateur
 from .forms import UserCreateForm, ReservationForm, TakeAwayForm, CommentForm
 from .models import BaseUserManager, Table, User, TakeAway, Review, Comment
 
 tot_table = 100  # numero di coperti
+
+
+def is_client(function):
+    def wrapper(*args, **kwargs):
+        request = args[0]
+        if request is not None:
+            user = request.user
+            try:
+                if not user.is_restaurateur and not user.is_admin and not user.is_staff:
+                    return function(*args, **kwargs)
+                else:
+                    return render(request, 'users/authentication_error.html', {})
+            except AttributeError:
+                raise Http404   #per utenti anonimi
+    return wrapper
 
 
 class create_user(CreateView):
@@ -52,6 +72,7 @@ def table_reserved(request):
         return render(request, 'users/table_reservation.html', context)
 
 
+@is_client
 def profile_view(request):
     user = request.user
     prenotazioniDopo = user.prenotazioni.filter(date__gt=Date.today())
@@ -60,6 +81,7 @@ def profile_view(request):
     return render(request, 'users/profile.html', {'user': user, 'prenotazioniDopo': prenotazioniDopo, 'prenotazioniPrima': prenotazioniPrima, 'takeaways': takeaways})
 
 
+@method_decorator(is_client, name='dispatch')
 class UpdateUser(UpdateView):
     model = User
     template_name = 'users/user_modify.html'
@@ -100,6 +122,7 @@ class UpdateUser(UpdateView):
         return obj
 
 
+@is_client
 def create_takeaway(request):
     if request.method == "POST":
         form = TakeAwayForm(request.POST)
@@ -171,7 +194,7 @@ def review_create_ajax(request):
         review.save()
         return render(request, "users/new_review.html", {"review": review})
 
-
+@login_required()
 def comment_create(request, **kwargs):
     if request.method == "POST":
         form = CommentForm(request.POST)
@@ -205,8 +228,23 @@ def comment_list(request, **kwargs):
     return render(request, 'users/comment_list.html', context)
 
 
+@login_required()
 def delete_prenotazione(request):
     prenotazione_pk = request.POST.get('prenotazione_pk')
     prenotazione = Table.objects.get(pk=prenotazione_pk)
     prenotazione.delete()
     return HttpResponse(prenotazione_pk)
+
+
+@is_restaurateur
+def restaurateur_view(request):
+    tables = Table.objects.filter(date__gt=Date.today())
+    today = datetime.today()
+    takeaways = TakeAway.objects.filter(date__year=today.year, date__month=today.month, date__day=today.day)
+    context = {
+        'tables': tables,
+        'takeaways': takeaways
+    }
+    return render(request, 'users/restaurarìteur_view.html', context)
+
+

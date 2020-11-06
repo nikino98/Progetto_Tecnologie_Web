@@ -14,6 +14,7 @@
       <th scope="col">Codice</th>
       <th scope="col">Bevande</th>
       <th scope="col">Sconto</th>
+      <th scope="col">Azioni</th>
     </tr>
   </thead>
   <tbody>
@@ -24,6 +25,7 @@
                 <td>{{ d.code }}</td>
                 <td>{{ d.drink }}</td>
                 <td>{{ d.discount }}%</td>
+                <td><a href="{% url 'offers:offer-delete-drink' d.pk%}" class="btn btn-danger">Elimina</a></td>
              </tr>
         {% endfor %}
   </tbody>
@@ -43,6 +45,7 @@
       <th scope="col">Codice</th>
       <th scope="col">Cibo</th>
       <th scope="col">Sconto</th>
+        <th scope="col">Azioni</th>
     </tr>
   </thead>
   <tbody>
@@ -53,6 +56,7 @@
                 <td>{{ f.code }}</td>
                 <td>{{ f.food }}</td>
                 <td>{{ f.discount }}%</td>
+                <td><a href="{% url 'offers:offer-delete-food' f.pk%}" class="btn btn-danger">Elimina</a></td>
              </tr>
         {% endfor %}
   </tbody>

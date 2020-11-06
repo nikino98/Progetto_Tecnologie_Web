@@ -72,7 +72,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     via = models.CharField(max_length=50, verbose_name='Via:')
     house_number = models.CharField(max_length=10, verbose_name='Numero civico:')
     piano = models.CharField(max_length=30, blank=True, verbose_name='Piano:')
-    note = models.TextField(blank=True, verbose_name='Note:')
+    note = models.TextField(blank=True, verbose_name='Note:', null=True)
     tel_regex = RegexValidator(regex=r'^\+?1?\d{10,10}$', message=('Numero di telefono errato!'))
     tel = models.CharField(validators=[tel_regex], max_length=10, verbose_name='Telefono:')
     is_admin = models.BooleanField(default=False)
@@ -114,7 +114,7 @@ class Table(models.Model):
     n_people = models.DecimalField(max_digits=2, decimal_places=0)
     reservation_name = models.CharField(max_length=50, default=None)
     reservation_last_name = models.CharField(max_length=50, default=None)
-    date = models.DateTimeField(default=None, null=True)
+    date = models.DateTimeField(default=None)
     discount = models.PositiveIntegerField(default=0, help_text="Inserire l'ammontare dello sconto percentuale",
                                            validators=[MinValueValidator(1), MaxValueValidator(100)])
 

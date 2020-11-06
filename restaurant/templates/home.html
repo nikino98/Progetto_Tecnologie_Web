@@ -72,9 +72,14 @@
         <a class="nav-link" href="{% url 'offers:offers-list'%}">Vedi le offerte</a>
       </li>
     {% endif %}
-    {% if user.is_authenticated %}
+    {% if user.is_authenticated and not user.is_restaurateur %}
         <li class="nav-item">
         <a class="nav-link" href="{% url 'users:user-profile'%}">Visita il tuo profilo</a>
+      </li>
+    {% endif %}
+    {% if user.is_restaurateur %}
+        <li class="nav-item">
+        <a class="nav-link" href="{% url 'users:prenotazione-list'%}">Visualizza prenotazioni</a>
       </li>
     {% endif %}
         <li class="nav-item">

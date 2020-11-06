@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block title %}Eliminazione prodotto{% endblock %}
+
+{% block content %}
+    <form method="post">{% csrf_token %}
+        <h3>Sei sicuro di voler eliminare l'offerta con codice {{ object.code }} per il prodotto <i>{{ object.food }}?</i></h3>
+        <input type="submit" class="btn btn-success" value="Si"/>
+        <button type="button" class="btn btn-info" name="cancel" onclick="location.href={% url 'products:product-list' %}">Torna indietro</button>
+    </form>
+{% endblock %}
