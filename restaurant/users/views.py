@@ -51,7 +51,8 @@ def table_reserved(request):
                     form.cleaned_data["discount"] = 15
 
             t = Table.objects.create(**form.cleaned_data)
-            t.user = request.user
+            if not request.user.is_anonymous:
+                t.user = request.user
             t.save()
             return redirect(reverse_lazy('home'))
         else:
@@ -193,6 +194,7 @@ def review_create_ajax(request):
         review = Review(rating=rating, comment=review_comment, user=user)
         review.save()
         return render(request, "users/new_review.html", {"review": review})
+
 
 @login_required()
 def comment_create(request, **kwargs):

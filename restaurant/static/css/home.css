@@ -15,24 +15,35 @@
     alignment: bottom;
     color: white;
     background-color: #9a2303;
-
+    -moz-border-radius: 20px;
+    -webkit-border-radius: 20px;
+    border-radius: 20px;
 }
 
 #reservation-button:hover {
     color: #9a2303;
     background-color: white;
+    -moz-border-radius: 20px;
+    -webkit-border-radius: 20px;
+    border-radius: 20px;
 }
 
 #takeaway-button{
     alignment: bottom;
     color: white;
     background-color: #9a2303;
+    -moz-border-radius: 20px;
+    -webkit-border-radius: 20px;
+    border-radius: 20px;
 
 }
 
 #takeaway-button:hover{
-     color: #9a2303;
+    color: #9a2303;
     background-color: white;
+    -moz-border-radius: 20px;
+    -webkit-border-radius: 20px;
+    border-radius: 20px;
 }
 
 
@@ -51,4 +62,10 @@
     z-index: 10;
 }
 
+#popup{
+    background-color: #757575;
+    color: white;   
+    opacity: 85%;
+    padding: 10px;
+}
 

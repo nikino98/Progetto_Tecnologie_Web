@@ -104,7 +104,14 @@
 {#    <br>#}
 
     {% if user.is_authenticated %}
-        <h4 class="mt-2">Benvenuto {{ user.first_name | capfirst }}!!</h4>
+{#        <h4 class="mt-2">Benvenuto {{ user.first_name | capfirst }}!!</h4>#}
+        <div class="jumbotron jumbotron-fluid mt-2" id="popup">
+            <div class="container">
+                <h1 class="display-4">Benvenuto {{ user.first_name | capfirst }}!!</h1>
+                <p class="lead">This is a modified jumbotron that occupies the entire horizontal space of its parent.</p>
+            </div>
+        </div>
+
     {% endif %}
 {#    <div id="user-options">#}
 {#        <a href={% url 'products:product-list' %}>Menù</a>#}

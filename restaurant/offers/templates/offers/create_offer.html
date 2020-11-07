@@ -6,7 +6,9 @@
 {% block content %}
     <form method="post">{% csrf_token %}
         {{ form | crispy }}
-        <input type="submit" value="Salva">
+        <button type="button" class="btn btn-danger" onclick="location.href='../'"
+                id="cancel-button">Indietro</button>
+        <input type="submit" class="btn btn-success" value="Salva">
     </form>
 {#     <p><b>Inserisci il codice dello sconto: </b></p>{{ object.code }}#}
 {#    <p><b>Inserisci il prodotto sul quale applicare lo sconto: </b></p>{{ object.product}}#}
