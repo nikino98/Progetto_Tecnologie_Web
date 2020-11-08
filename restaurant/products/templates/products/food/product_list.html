@@ -3,65 +3,125 @@
 {% block title %}Lista prodotti{% endblock %}
 
 {% block content %}
-    {% if  object_list.count == 0 %}
-        <div>
-            <h1>Nessun Prodotto inserito</h1>
-        </div>
+    {% if food|length == 0 and drink|length == 0 %}
+            <h1>Nessuno prodotto nel menù!</h1>
+     {% endif %}
+        <h1>Cibi</h1>
+        {% if  food|length == 0 %}
+            <div>
+                <h1><em>Nessun cibo inserito nel menù!</em></h1>
+            </div>
 
-    {% else %}
-        <table class="table">
-            <thead>
-            <tr>
-                <th scope="col">#</th>
-                <th scope="col">Immagine</th>
-                <th scope="col">Nome</th>
-                <th scope="col">Descrizione</th>
-                <th scope="col">Ingredienti</th>
-                <th scope="col">Prezzo</th>
-                {% if user.is_restaurateur %}
-                    <th scope="col">Azioni</th>
-                {% endif %}
-            </tr>
-            </thead>
-            <tbody>
-
-            {% for item in object_list %}
-                <tr id="riga">
-                    <th scope="row">{{ forloop.counter }}</th>
-                    <td><img src="{{ item.image.url }}"></td>
-                    <td>{{ item.name }}</td>
-                    <td>{{ item.description }}</td>
-                    <td>
-                        {% if item.ingredients.count == 1 %}
-                            {{ item.ingredients.get }}
-                        {% else %}
-                            {% for obj in item.ingredients.all %}
-                                {{ obj.name }} <br>
-                            {% endfor %}
-                        {% endif %}
-                    </td>
-                    <td>{{ item.price }}</td>
-                    <td>
-{#                        <button type="button" class="btn btn-warning" onclick="location.href='{% url 'products:product-create' %}'" id="create-button">Crea</button>#}
-                        {% if user.is_restaurateur %}
-                            <button type="button" class="btn btn-info" onclick="location.href='{% url 'products:product-update'  item.id %}'" id="update-button">Modifica</button>
-                            <button type="button" class="btn btn-danger" onclick="location.href='{% url 'products:product-delete'  item.id %}'" id="delete-button">Elimina</button>
-                        {% endif %}
-                        {#                            <script>#}
-                        {#                                function deleteFunction(){#}
-                        {#                                    var#}
-                        {#                                }#}
-                        {#                            </script>#}
-                    </td>
+        {% else %}
+            <table class="table">
+                <thead>
+                <tr>
+                    <th scope="col">#Cibo</th>
+                    <th scope="col">Immagine</th>
+                    <th scope="col">Nome</th>
+                    <th scope="col">Descrizione</th>
+                    <th scope="col">Ingredienti</th>
+                    <th scope="col">Prezzo</th>
+                    {% if user.is_restaurateur %}
+                        <th scope="col">Azioni</th>
+                    {% endif %}
                 </tr>
-            {% endfor %}
-            </tbody>
-        </table>
-    {% endif %}
-        <button type="button" class="btn btn-primary" onclick="location.href='../'">Indietro</button>
+                </thead>
+                <tbody>
+
+                {% for item in food %}
+                    <tr id="riga">
+                        <th scope="row">{{ forloop.counter }}</th>
+                        {% if item.image %}
+                            <td><img src="{{ item.image.url }}" style="width: 150px; height: 150px"></td>
+                        {% else %}
+                            <td><p><em>Nessun immagine aggiunta</em></p></td>
+                        {% endif %}
+                        <td>{{ item.name }}</td>
+                        <td>{{ item.description }}</td>
+                        <td>
+                            {% if item.ingredients.count == 1 %}
+                                {{ item.ingredients.get }}
+                            {% else %}
+                                {% for obj in item.ingredients.all %}
+                                    {{ obj.name }} <br>
+                                {% endfor %}
+                            {% endif %}
+                        </td>
+                        <td>{{ item.price }}</td>
+                        <td>
+    {#                        <button type="button" class="btn btn-warning" onclick="location.href='{% url 'products:product-create' %}'" id="create-button">Crea</button>#}
+                            {% if user.is_restaurateur %}
+                                <button type="button" class="btn btn-info" onclick="location.href='{% url 'products:product-update'  item.id %}'" id="update-button">Modifica</button>
+                                <button type="button" class="btn btn-danger" onclick="location.href='{% url 'products:product-delete'  item.id %}'" id="delete-button">Elimina</button>
+                            {% endif %}
+                            {#                            <script>#}
+                            {#                                function deleteFunction(){#}
+                            {#                                    var#}
+                            {#                                }#}
+                            {#                            </script>#}
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        {% endif %}
+
+    {# -----------------------------BEVANDE-------------------------------#}
+        {% if  drink|length == 0 %}
+            <div>
+                <h1><em>Nessuna bevanda inserita nel menù!</em></h1>
+            </div>
+
+        {% else %}
+            <h1>Bevande</h1>
+            <table class="table">
+                <thead>
+                <tr>
+                    <th scope="col">#Bevanda</th>
+                    <th scope="col">Immagine</th>
+                    <th scope="col">Nome</th>
+                    <th scope="col">Descrizione</th>
+                    <th scope="col">Litri</th>
+                    <th scope="col">Prezzo</th>
+                    {% if user.is_restaurateur %}
+                        <th scope="col">Azioni</th>
+                    {% endif %}
+                </tr>
+                </thead>
+                <tbody>
+
+                {% for item in drink %}
+                    <tr id="riga">
+                        <th scope="row">{{ forloop.counter }}</th>
+                        {% if item.image %}
+                            <td><img src="{{ item.image.url }}" style="width: 150px; height: 150px"></td>
+                        {% else %}
+                            <td><p><em>Nessun immagine aggiunta</em></p></td>
+                        {% endif %}
+                        <td>{{ item.name }}</td>
+                        <td>{{ item.description }}</td>
+                        <td>{{ item.litri }}</td>
+                        <td>{{ item.price }}</td>
+                        <td>
+    {#                        <button type="button" class="btn btn-warning" onclick="location.href='{% url 'products:product-create' %}'" id="create-button">Crea</button>#}
+                            {% if user.is_restaurateur %}
+                                <button type="button" class="btn btn-info" onclick="location.href='{% url 'products:drink-update'  item.id %}'" id="update-button-drink">Modifica</button>
+                                <button type="button" class="btn btn-danger" onclick="location.href='{% url 'products:drink-delete'  item.id %}'" id="delete-button-drink">Elimina</button>
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        {% endif %}
+
+
+        <button type="button" class="btn btn-danger" onclick="location.href='../'">Indietro</button>
         {% if user.is_restaurateur %}
-            <button type="button" class="btn btn-secondary" onclick="location.href='create/'">Crea un nuovo prodotto</button>
-        {% endif %}    
+            <button type="button" class="btn btn-warning" onclick="location.href='create/'">Aggiungi un nuovo cibo</button>
+            <button type="button" class="btn btn-warning" onclick="location.href='create_drink/'" style="background-color: orange">Aggiungi una nuova bevanda</button>
+        {% endif %}
 
     {#    SISTEMA LA DELETE IN MODO DA FARLA DINAMICA#}
     {#     {% if messages %}#}

@@ -10,6 +10,8 @@
             <div class="alert alert-danger" role="alert">Utente o password sbagliati!</div>
         {% endif %}
         <p>{{ form|crispy    }}</p>
-        <input type="submit" class="btn-info" value="Log In">
+         <button type="button" class="btn btn-danger" onclick="location.href='../../'"
+                id="cancel-button">Annulla</button>
+        <input type="submit" class="btn btn-info" value="Log In">
     </form>
 {% endblock %}

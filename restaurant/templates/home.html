@@ -107,8 +107,12 @@
 {#        <h4 class="mt-2">Benvenuto {{ user.first_name | capfirst }}!!</h4>#}
         <div class="jumbotron jumbotron-fluid mt-2" id="popup">
             <div class="container">
-                <h1 class="display-4">Benvenuto {{ user.first_name | capfirst }}!!</h1>
-                <p class="lead">This is a modified jumbotron that occupies the entire horizontal space of its parent.</p>
+                <h1 class="display-4">Ciao {{ user.first_name | capfirst }}!!</h1>
+                {% if not user.is_restaurateur %}
+                    <p class="lead">Benvenuto nel nostro ristorante! Da noi potrai assaporare cucina tradizionale, tipica del nostro paese!</p>
+                {% else %}
+                    <p class="lead">Bentornato capo!</p>
+                {% endif %}
             </div>
         </div>
 

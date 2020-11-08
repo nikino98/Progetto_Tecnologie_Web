@@ -6,6 +6,8 @@
 {% block content %}
     <form method="post">{% csrf_token %}
         {{ form|crispy }}
+         <button type="button" class="btn btn-danger" onclick="location.href='../'"
+                id="cancel-button">Annulla</button>
         <input type="submit" value="Salva" class="btn btn-primary">
     </form>
 {% endblock %}

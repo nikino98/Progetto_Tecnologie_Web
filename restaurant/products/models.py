@@ -20,6 +20,7 @@ class Ingredient(models.Model):
 
 
 class Product(models.Model):
+    image = models.ImageField(default='dishes/no-image-1771002-1505134.png', null=True, blank=True, upload_to='dishes')
     name = models.CharField(max_length=80)
     description = models.TextField(null=True, blank=True)
     MinValueValidator.message = "Il prezzo del prodotto deve essere maggiore o uguale a 0!!"
@@ -33,7 +34,6 @@ class Product(models.Model):
 
 
 class Food(Product):
-    image = models.ImageField(default='dishes/no-image-1771002-1505134.png', null=True, blank=True, upload_to='dishes')
     ingredients = models.ManyToManyField(Ingredient)
 
     def get_food_count(self):

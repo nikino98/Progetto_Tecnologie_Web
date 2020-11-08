@@ -2,7 +2,7 @@ from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit, Layout, Div, HTML, Field, Button
 from django import forms
 
-from products.models import Food
+from products.models import Food, Drink
 
 
 class CreateProductForm(forms.ModelForm):
@@ -25,7 +25,7 @@ class CreateProductForm(forms.ModelForm):
     #     Submit('save', 'Salva')
     # )
     # helper.add_input(Submit('salva', 'Salva'))
-    price = forms.DecimalField(min_value=0.5, label='Inserisci il prezzo del prodotto:')
+    price = forms.DecimalField(min_value=0.5, label='Inserisci il prezzo del piatto:')
 
     class Meta:
         model = Food
@@ -46,15 +46,8 @@ class CreateProductForm(forms.ModelForm):
         }
 
 
-class UpdateProductForm(forms.ModelForm):
+class ProductModifyForm(forms.ModelForm):
     price = forms.DecimalField(min_value=0.5)
-
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.helper = FormHelper()
-        self.helper.add_input(
-            Submit('submit', 'Conferma', css_class='btn btn-success')
-        )
 
     class Meta:
         model = Food
@@ -67,13 +60,86 @@ class UpdateProductForm(forms.ModelForm):
         )
 
         labels = {
-            'image': 'Immagine del piatto',
+            'image': '<b>Modifica Immagine del piatto',
             'name': 'Nome del piatto',
             'description': 'Descrizione del piatto',
             'ingredients': 'Ingredienti del piatto',
-            'price': 'Prezzo del piatto',
+            'price': 'Prezzo del piatto</b>',
         }
 
 
+# class UpdateProductForm(forms.ModelForm):
+#     price = forms.DecimalField(min_value=0.5)
+#
+#     def __init__(self, *args, **kwargs):
+#         super().__init__(*args, **kwargs)
+#         self.helper = FormHelper()
+#         self.helper.add_input(
+#             Submit('submit', 'Conferma', css_class='btn btn-success')
+#         )
+#
+#     class Meta:
+#         model = Food
+#         fields = (
+#             'image',
+#             'name',
+#             'description',
+#             'ingredients',
+#             'price',
+#         )
+#
+#         labels = {
+#             'image': 'Immagine del piatto',
+#             'name': 'Nome del piatto',
+#             'description': 'Descrizione del piatto',
+#             'ingredients': 'Ingredienti del piatto',
+#             'price': 'Prezzo del piatto',
+#         }
+
+
+class CreateDrink(forms.ModelForm):
+    price = forms.DecimalField(min_value=0.5, label='Inserisci il prezzo del piatto:')
+    litri = forms.DecimalField(min_value=0.1, label='Inserisci i litri della bevanda:')
+
+    class Meta:
+        model = Drink
+        fields = (
+            'image',
+            'name',
+            'description',
+            'litri',
+            'price'
+        )
+
+        labels = {
+            'image': "Inserisci l'immagine del cibo che desideri, altrimenti non inserire nulla",
+            'name': 'Inserisci il nome del cibo',
+            'description': 'Inserisci una descrizione del cibo',
+            'price': 'Inserisci il prezzo'
+        }
+
+
+class DrinkModifyForm(forms.ModelForm):
+    price = forms.DecimalField(min_value=0.5, label='Inserisci il nuovo prezzo della bevanda:')
+    litri = forms.DecimalField(min_value=0.1, label='Inserisci i litri della bevanda:')
+    image = forms.ImageField()
+
+    class Meta:
+        model = Drink
+        fields = (
+            'image',
+            'name',
+            'description',
+            'litri',
+            'price'
+        )
+
+        labels = {
+            'image': "<b>Modifica immagine",
+            'name': 'Inserisci il nome della bevanda',
+            'description': 'Inserisci una descrizione della bevanda',
+            'litri': 'Inserisci i litri',
+            'price': 'Inserisci il prezzo</b>'
+        }
 
 

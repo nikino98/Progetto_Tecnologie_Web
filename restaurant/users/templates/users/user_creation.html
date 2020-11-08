@@ -8,7 +8,9 @@
 
     <form method="post">{% csrf_token %}
         {{ form | crispy }}
-    <input type="submit" value="Salva">
+         <button type="button" class="btn btn-danger" onclick="location.href='../../'"
+                id="cancel-button">Annulla</button>
+    <input type="submit" class="btn btn-success" value="Salva">
     </form>
 
 {% endblock %}
