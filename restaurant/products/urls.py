@@ -1,6 +1,6 @@
 from django.urls import path, include
 from products.views import create_food, DeleteProduct, create_drink, product_view, DeleteDrink, \
-    DrinkModify, ProductModify
+    DrinkModify, ProductModify, modify_product
 
 app_name = 'products'
 urlpatterns = [
