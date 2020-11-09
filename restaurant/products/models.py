@@ -20,11 +20,11 @@ class Ingredient(models.Model):
 
 
 class Product(models.Model):
-    image = models.ImageField(default='dishes/no-image-1771002-1505134.png', null=True, blank=True, upload_to='dishes')
+    image = models.ImageField(null=True, blank=True, upload_to='dishes')
     name = models.CharField(max_length=80)
     description = models.TextField(null=True, blank=True)
-    MinValueValidator.message = "Il prezzo del prodotto deve essere maggiore o uguale a 0!!"
-    price = models.DecimalField(max_digits=10, decimal_places=2, validators=[MinValueValidator(Decimal('0.01'))])
+    # MinValueValidator.message = "Il prezzo del prodotto deve essere maggiore o uguale a 0!!"   validators=[MinValueValidator(Decimal('0.01'))]
+    price = models.DecimalField(max_digits=10, decimal_places=2)
 
     class Meta:
         abstract = True
@@ -41,4 +41,4 @@ class Food(Product):
 
 
 class Drink(Product):
-    litri = models.DecimalField(max_digits=10, decimal_places=2, validators=[MinValueValidator(Decimal('0.01'))])
+    litri = models.DecimalField(max_digits=10, decimal_places=2)

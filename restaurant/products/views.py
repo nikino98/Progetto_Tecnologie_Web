@@ -4,9 +4,9 @@ from django.http import Http404, HttpResponseRedirect
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse, reverse_lazy
 from django.utils.decorators import method_decorator
-from django.views.generic import ListView, DetailView, DeleteView, UpdateView
-from .models import Food, Drink
-from .forms import CreateProductForm, CreateDrink, DrinkModifyForm, ProductModifyForm
+from django.views.generic import ListView, DetailView, DeleteView, UpdateView, CreateView
+from .models import Food, Drink, Ingredient
+from .forms import CreateProductForm, CreateDrink, DrinkModifyForm, ProductModifyForm, IngredientAddForm
 from django.contrib import messages
 from users.models import User
 
@@ -24,11 +24,12 @@ def is_restaurateur(function):
             user = request.user
             try:
                 if user.is_restaurateur:
-                        return function(*args, **kwargs)
+                    return function(*args, **kwargs)
                 else:
                     return render(request, 'users/authentication_error.html', {})
             except AttributeError:
-                raise Http404   #per utenti anonimi
+                raise Http404  # per utenti anonimi
+
     return wrapper
 
 
@@ -119,7 +120,7 @@ def modify_product(request, pk):
             food.image = form.cleaned_data['image']
             food.price = form.cleaned_data['price']
             food.save()
-            #messages.success(request, 'Piatto modificato correttamente!')
+            # messages.success(request, 'Piatto modificato correttamente!')
             redirect_url = reverse('products:product-list')
             return redirect(redirect_url)
 
@@ -130,11 +131,11 @@ def modify_product(request, pk):
         return render(request, 'products/food/product_update.html', context)
     else:
         form = ProductModifyForm({
-                'image': Food.objects.get(pk=11).image.name,
-                'name': Food.objects.get(pk=11).name,
-                'description': Food.objects.get(pk=11).description,
-                #'ingredients': Food.objects.filter(pk=11).ingredients,
-             })
+            'image': Food.objects.get(pk=11).image.name,
+            'name': Food.objects.get(pk=11).name,
+            'description': Food.objects.get(pk=11).description,
+            # 'ingredients': Food.objects.filter(pk=11).ingredients,
+        })
         context = {
             'form': form,
         }
@@ -152,7 +153,6 @@ class ProductModify(UpdateView):
     def post(self, request, *args, **kwargs):
         form_class = self.get_form_class()
         form = self.get_form(form_class)
-        t = form.is_valid()
         if form.is_valid():
             # form.cleaned_data['image'] = request.POST['image']
             # form.save()
@@ -161,9 +161,12 @@ class ProductModify(UpdateView):
             food.description = request.POST['description']
             food.ingredients.set(form.cleaned_data['ingredients'])
             food.image.delete()
-            food.image = 'dishes/' + request.POST['image']
+            if not form.cleaned_data['image']:
+                food.image = ''
+            else:
+                food.image = form.cleaned_data['image']
             food.price = request.POST['price']
-            food.save(update_fields=['image'])
+            food.save()
             return HttpResponseRedirect(reverse_lazy('products:product-list'))
         else:
             return self.form_invalid(form)
@@ -176,16 +179,44 @@ class DrinkModify(UpdateView):
     form_class = DrinkModifyForm
     success_url = reverse_lazy('products:product-list')
 
-    # def post(self, request, *args, **kwargs):
-    #     drink_pk = kwargs.get('pk', False)
-    #     drink = Drink.objects.get(pk=drink_pk)
-    #     form_class = self.get_form_class()
-    #     form = self.get_form(form_class)
-    #     t = form.is_valid()
-    #     if form.is_valid():
-    #         #form.cleaned_data['image'] = request.POST['image']
-    #         drink.image = request.POST['image']
-    #         drink.save()
-    #         return reverse_lazy('products:product-list')
-    #     else:
-    #         return self.form_invalid(form)
+    def post(self, request, *args, **kwargs):
+        form_class = self.get_form_class()
+        form = self.get_form(form_class)
+        if form.is_valid():
+            # form.cleaned_data['image'] = request.POST['image']
+            # form.save()
+            drink = get_object_or_404(Drink, pk=kwargs.get('pk'))
+            drink.name = form.cleaned_data['name']
+            drink.description = form.cleaned_data['description']
+            drink.litri = form.cleaned_data['litri']
+            drink.image.delete()
+            if not form.cleaned_data['image']:
+                drink.image = ''
+            else:
+                drink.image = form.cleaned_data['image']
+            drink.price = form.cleaned_data['price']
+            drink.save()
+            return HttpResponseRedirect(reverse_lazy('products:product-list'))
+        else:
+            return self.form_invalid(form)
+
+
+@method_decorator(is_restaurateur, name='dispatch')
+class IngredientAdd(CreateView):
+    template_name = 'products/food/ingredients_add.html'
+    model = Ingredient
+    form_class = IngredientAddForm
+    success_url = reverse_lazy('products:ingredient-list')
+
+
+@method_decorator(is_restaurateur, name='dispatch')
+class IngredientDelete(DeleteView):
+    template_name = 'products/food/ingredients_delete.html'
+    model = Ingredient
+    success_url = reverse_lazy('products:ingredient-list')
+
+
+@method_decorator(is_restaurateur, name='dispatch')
+class IngredientList(ListView):
+    template_name = 'products/food/ingredients_list.html'
+    model = Ingredient

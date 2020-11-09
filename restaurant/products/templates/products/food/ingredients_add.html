@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}Aggiunta ingrediente{% endblock %}
+
+{% block content %}
+    <form method="post">{% csrf_token %}
+        {{ form|crispy }}
+        <button type="button" class="btn btn-danger" onclick="location.href='../'">Indietro</button>
+        <input type="submit" class="btn btn-success" value="Aggiungi">
+    </form>
+{% endblock %}

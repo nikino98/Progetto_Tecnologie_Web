@@ -2,7 +2,7 @@ from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit, Layout, Div, HTML, Field, Button
 from django import forms
 
-from products.models import Food, Drink
+from products.models import Food, Drink, Ingredient
 
 
 class CreateProductForm(forms.ModelForm):
@@ -122,7 +122,6 @@ class CreateDrink(forms.ModelForm):
 class DrinkModifyForm(forms.ModelForm):
     price = forms.DecimalField(min_value=0.5, label='Inserisci il nuovo prezzo della bevanda:')
     litri = forms.DecimalField(min_value=0.1, label='Inserisci i litri della bevanda:')
-    image = forms.ImageField()
 
     class Meta:
         model = Drink
@@ -142,4 +141,18 @@ class DrinkModifyForm(forms.ModelForm):
             'price': 'Inserisci il prezzo</b>'
         }
 
+
+class IngredientAddForm(forms.ModelForm):
+    price = forms.DecimalField(min_value=0.5, label='Inserisci il prezzo')
+
+    class Meta:
+        model = Ingredient
+        fields = (
+            'name',
+            'price'
+        )
+
+        labels = {
+            'name': "Inserisci l'ingrediente"
+        }
 

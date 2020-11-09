@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}Lista ingredienti{% endblock %}
+
+{% block content %}
+    <table class="table">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Nome</th>
+      <th scope="col">Prezzo</th>
+      <th scope="col">Azione</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for item in object_list %}
+    <tr>
+          <th scope="row">{{ forloop.counter }}</th>
+          <td>{{ item.name }}</td>
+          <td>{{ item.price }}</td>
+          <td><button type="button" class="btn btn-danger" onclick="location.href='{% url 'products:ingredient-delete'  item.id %}'" id="delete-button-drink">Elimina</button></td>
+        {% endfor %}
+    </tr>
+  </tbody>
+</table>
+    <button type="button" class="btn btn-danger" onclick="location.href='../'">Indietro</button>
+    <button type="button" class="btn btn-success" onclick="location.href='{% url 'products:ingredient-add' %}'">Aggiungi un nuovo ingrediente</button>
+{% endblock %}

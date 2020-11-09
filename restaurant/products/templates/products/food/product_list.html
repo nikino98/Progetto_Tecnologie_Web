@@ -14,7 +14,7 @@
 
         {% else %}
             <table class="table">
-                <thead>
+                <thead class="thead-dark">
                 <tr>
                     <th scope="col">#Cibo</th>
                     <th scope="col">Immagine</th>
@@ -76,7 +76,7 @@
         {% else %}
             <h1>Bevande</h1>
             <table class="table">
-                <thead>
+                <thead class="thead-dark">
                 <tr>
                     <th scope="col">#Bevanda</th>
                     <th scope="col">Immagine</th>
@@ -121,6 +121,7 @@
         {% if user.is_restaurateur %}
             <button type="button" class="btn btn-warning" onclick="location.href='create/'">Aggiungi un nuovo cibo</button>
             <button type="button" class="btn btn-warning" onclick="location.href='create_drink/'" style="background-color: orange">Aggiungi una nuova bevanda</button>
+            <button type="button" class="btn btn-warning" onclick="location.href='{% url 'products:ingredient-list' %}'" style="background-color: #9a2303; color: white;">Guarda la lista degli ingredienti</button>
         {% endif %}
 
     {#    SISTEMA LA DELETE IN MODO DA FARLA DINAMICA#}
