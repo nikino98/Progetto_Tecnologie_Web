@@ -1,3 +1,6 @@
 # Progetto_Tecnologie_Web
-Project for a website in Django
-<h1>Ciao</h1>
+Progetto di un sito per la gestione di una Pizzeria Ristorante.
+Clonara la repository nella vostra directory.
+
+<h1>Prerequisiti</h1>
+<option></option>
