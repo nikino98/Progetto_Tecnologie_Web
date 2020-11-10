@@ -47,7 +47,7 @@ def table_reserved(request):
         if form.is_valid():
             # form.save() andava anche così e con la funzione save nel form
             if request.user.is_authenticated:
-                if request.user.numero_prenotazioni % 15 == 0 and request.user.numero_prenotazioni != 0:   #ogni 15 prenotazioni ho uno sconto
+                if request.user.numero_prenotazioni % 15 == 0 and request.user.numero_prenotazioni != 0 and not request.user.restaurateur:   #ogni 15 prenotazioni ho uno sconto
                     form.cleaned_data["discount"] = 15
 
             t = Table.objects.create(**form.cleaned_data)

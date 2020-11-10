@@ -9,7 +9,7 @@
 
 {% block content %}
     {% if user.is_authenticated %}
-        {% if user.numero_prenotazioni|divisibleby:"15" and user.numero_prenotazioni != 0 %}
+        {% if user.numero_prenotazioni|divisibleby:"15" and user.numero_prenotazioni != 0 and not user.is_restaurateur %}
             <h2>Hai lo sconto del 15%!!</h2>
         {% endif %} 
     {% endif %} 
