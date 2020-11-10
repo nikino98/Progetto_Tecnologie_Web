@@ -3,4 +3,8 @@ Progetto di un sito per la gestione di una Pizzeria Ristorante.
 Clonara la repository nella vostra directory.
 
 <h1>Prerequisiti</h1>
-<option>ciao</option>
+<ul>
+  <li>python </li>
+  <li>pipenv</li>
+  <p>Installazione:</p><code>pip3 install pipenv</code>
+</ul>
