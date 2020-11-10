@@ -12,7 +12,7 @@
     <div class="row">
         <div class="col"></div>
         <div class="col-10">
-        {% if user.is_authenticated %}
+        {% if user.is_authenticated and not user.is_restaurateur %}
             {% if not user.review %}
                 <form method="post" id="form-review" class="form-inline">{% csrf_token %}
                             <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css" rel="stylesheet"/>

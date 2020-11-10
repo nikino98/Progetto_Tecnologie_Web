@@ -62,7 +62,7 @@ def table_reserved(request):
             }
             return render(request, 'users/table_reservation.html', context)
     else:
-        if request.user.is_authenticated:
+        if request.user.is_authenticated and not request.user.is_restaurateur:  # il ristoratore può prenotare per i clienti che chiamano
             form = ReservationForm(
                 {"reservation_name": request.user.first_name, "reservation_last_name": request.user.last_name})
         else:
@@ -123,7 +123,7 @@ class UpdateUser(UpdateView):
         return obj
 
 
-@is_client
+@is_client  # per prenotare d'asporto, l'utente deve essere autenticato, quindi non ha senso farlo fare al ristoratore. Si è deciso di non fare gestire questo aspetto al ristoratore
 def create_takeaway(request):
     if request.method == "POST":
         form = TakeAwayForm(request.POST)
@@ -185,6 +185,7 @@ def review_list(request):
     return render(request, 'users/user_review.html', {'reviews': Review.objects.all().order_by('date')})
 
 
+@is_client
 def review_create_ajax(request):
     if request.POST:
         rating = int(request.POST.get('numero_stelle'))

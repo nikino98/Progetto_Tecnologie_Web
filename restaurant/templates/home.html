@@ -134,14 +134,16 @@
 {#        <a href={% url 'users:review-list' %}>Vai alle recensioni</a>#}
 {#    </div>#}
 
+
     <p id="submission">
         <button type="button" class="btn btn-default" onclick="location.href='{% url 'users:table-reserve' %}'"
                 id="reservation-button">Prenota un tavolo</button>
 
-        {% if user.is_authenticated %}
+        {% if user.is_authenticated and not user.is_restaurateur %}
             <button type="button" class="btn btn-default" onclick="location.href='{% url 'users:takeaway' %}'"
                 id="takeaway-button">Ordina d'asporto</button>
         {% endif %}
     </p>
+
 
 {% endblock %}
