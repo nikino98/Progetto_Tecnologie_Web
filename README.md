@@ -3,7 +3,7 @@ Progetto di un sito per la gestione di una Pizzeria Ristorante.
 Clonare la repository nella vostra directory.
 
 <h3>Prerequisiti</h3>
-======================
+----------------------
 <ul>
   <li>python </li>
   <li>pipenv</li>
@@ -11,7 +11,7 @@ Clonare la repository nella vostra directory.
 </ul>
 
 <h3>Librerie</h3>
-==================
+------------------
 <ul>
   <li>Django</li>
   <li>Pillow</li>
