@@ -108,41 +108,6 @@ class DeleteDrink(DeleteView):
     success_url = reverse_lazy('products:product-list')
 
 
-@is_restaurateur
-def modify_product(request, pk):
-    if request.method == 'POST':
-        form = ProductModifyForm(Food, request.FILES)
-        food = get_object_or_404(Food, pk=pk)
-        if request.POST and form.is_valid():
-            food.name = form.cleaned_data['name']
-            food.description = form.cleaned_data['description']
-            food.ingredients.set(form.cleaned_data['ingredients'])
-            food.image = form.cleaned_data['image']
-            food.price = form.cleaned_data['price']
-            food.save()
-            # messages.success(request, 'Piatto modificato correttamente!')
-            redirect_url = reverse('products:product-list')
-            return redirect(redirect_url)
-
-        context = {
-            'form': form,
-            'food_name': food.name,
-        }
-        return render(request, 'products/food/product_update.html', context)
-    else:
-        form = ProductModifyForm({
-            'image': Food.objects.get(pk=11).image.name,
-            'name': Food.objects.get(pk=11).name,
-            'description': Food.objects.get(pk=11).description,
-            # 'ingredients': Food.objects.filter(pk=11).ingredients,
-        })
-        context = {
-            'form': form,
-        }
-
-        return render(request, 'products/food/product_update.html', context)
-
-
 @method_decorator(is_restaurateur, name='dispatch')
 class ProductModify(UpdateView):
     model = Food

@@ -1,11 +1,15 @@
 {% extends 'base.html' %}
+{% load static %}
 
-{% block title %}Lista prodotti{% endblock %}
+{% block title %}Menù{% endblock %}
+
+{% block head %}<link rel="stylesheet" type="text/css" href="{% static 'css/product_list.css' %}">{% endblock %}
 
 {% block content %}
     {% if food|length == 0 and drink|length == 0 %}
             <h1>Nessuno prodotto nel menù!</h1>
-     {% endif %}
+     {% else %}
+
         <h1>Cibi</h1>
         {% if  food|length == 0 %}
             <div>
@@ -68,13 +72,14 @@
         {% endif %}
 
     {# -----------------------------BEVANDE-------------------------------#}
+        <h1>Bevande</h1>
         {% if  drink|length == 0 %}
             <div>
                 <h1><em>Nessuna bevanda inserita nel menù!</em></h1>
             </div>
 
         {% else %}
-            <h1>Bevande</h1>
+
             <table class="table">
                 <thead class="thead-dark">
                 <tr>
@@ -115,14 +120,15 @@
                 </tbody>
             </table>
         {% endif %}
-
+{% endif %}
 
         <button type="button" class="btn btn-danger" onclick="location.href='../'">Indietro</button>
         {% if user.is_restaurateur %}
-            <button type="button" class="btn btn-warning" onclick="location.href='create/'">Aggiungi un nuovo cibo</button>
-            <button type="button" class="btn btn-warning" onclick="location.href='create_drink/'" style="background-color: orange">Aggiungi una nuova bevanda</button>
-            <button type="button" class="btn btn-warning" onclick="location.href='{% url 'products:ingredient-list' %}'" style="background-color: #9a2303; color: white;">Guarda la lista degli ingredienti</button>
+            <button type="button" id="btn-create" class="btn btn-warning" onclick="location.href='create/'">Aggiungi un nuovo cibo</button>
+            <button type="button" id="btn-add-drink" class="btn btn-warning" onclick="location.href='create_drink/'">Aggiungi una nuova bevanda</button>
+            <button type="button" id="btn-ingredient-list" class="btn btn-warning" onclick="location.href='{% url 'products:ingredient-list' %}'">Guarda la lista degli ingredienti</button>
         {% endif %}
+
 
     {#    SISTEMA LA DELETE IN MODO DA FARLA DINAMICA#}
     {#     {% if messages %}#}

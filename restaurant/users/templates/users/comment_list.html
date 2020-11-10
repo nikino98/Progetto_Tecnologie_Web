@@ -22,4 +22,6 @@
             </div>
          </div>
     {% endfor %}
+    <button type="button" class="mt-2 btn btn-danger" onclick="location.href='{% url 'users:review-list' %}'"
+                id="cancel-button">Indietro</button>
 {% endblock %}

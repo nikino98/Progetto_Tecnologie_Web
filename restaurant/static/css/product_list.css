@@ -1,0 +1,35 @@
+#btn-create{
+    -moz-border-radius: 20px;
+    -webkit-border-radius: 20px;
+    border-radius: 20px;
+}
+
+#btn-create:hover{
+    background-color: black;
+    color: bisque;
+}
+
+#btn-add-drink{
+    background-color: orange;
+    -moz-border-radius: 20px;
+    -webkit-border-radius: 20px;
+    border-radius: 20px;
+}
+
+#btn-add-drink:hover{
+    background-color: black;
+    color: orange;
+}
+
+#btn-ingredient-list{
+    background-color: #9a2303;
+    color: white;
+    -moz-border-radius: 20px;
+    -webkit-border-radius: 20px;
+    border-radius: 20px;
+}
+
+#btn-ingredient-list:hover{
+    background-color: white;
+    color: #9a2303;
+}

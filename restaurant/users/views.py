@@ -47,7 +47,7 @@ def table_reserved(request):
         if form.is_valid():
             # form.save() andava anche così e con la funzione save nel form
             if request.user.is_authenticated:
-                if request.user.numero_prenotazioni % 15 == 0:   #ogni 15 prenotazioni ho uno sconto
+                if request.user.numero_prenotazioni % 15 == 0 and request.user.numero_prenotazioni != 0:   #ogni 15 prenotazioni ho uno sconto
                     form.cleaned_data["discount"] = 15
 
             t = Table.objects.create(**form.cleaned_data)
@@ -207,7 +207,7 @@ def comment_create(request, **kwargs):
             review = Review.objects.get(pk=review_pk)
             t.review = review
             t.save()
-            return redirect(reverse_lazy('home'))
+            return redirect(reverse_lazy('users:review-list'))
         else:
             context = {
                 'form': form,
