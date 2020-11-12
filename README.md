@@ -27,3 +27,16 @@ Clonare la repository nella vostra directory.
   <li>six</li>
   <li>sqlparse</li>
 </ul>
+
+<p>Per poter installare le librerie, posizionarsi nella cartella del progetto (restaurant) ed eseguire da terminale:</p> 
+<p><code>pipenv install</code></p>
+
+<h3>Esecuzione</h3>
+<p>Per poter eseguire il progetto, posizionarsi nella cartella principale del progetto (restaurant) ed eseguire i seguenti comandi:
+<p><code>pipenv shell</code></p> -> per attivare il virtual enviroment;
+<p><code>python manage.py runserver</code></p> -> per lanciare il web server.
+Infine cliccare sul link restituito.
+
+<h3>Esecuzione Test</h3>
+<p>Posizionarsi nella cartella del progetto (restaurant) ed eseguire il seguente comando:</p>
+<p><code>python manage.py test</code></p>
