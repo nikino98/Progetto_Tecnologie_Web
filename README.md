@@ -33,8 +33,8 @@ Clonare la repository nella vostra directory.
 
 <h3>Esecuzione</h3>
 <p>Per poter eseguire il progetto, posizionarsi nella cartella principale del progetto (restaurant) ed eseguire i seguenti comandi:
-<p><code>pipenv shell</code></p> -> per attivare il virtual enviroment;
-<p><code>python manage.py runserver</code></p> -> per lanciare il web server.
+<p><code>pipenv shell</code> -> per attivare il virtual enviroment;</p>
+<p><code>python manage.py runserver</code> -> per lanciare il web server.</p> 
 Infine cliccare sul link restituito.
 
 <h3>Esecuzione Test</h3>
