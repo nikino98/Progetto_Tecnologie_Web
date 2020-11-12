@@ -5,7 +5,7 @@ Clonare la repository nella vostra directory.
 <h3>Prerequisiti</h3>
 
 <ul>
-  <li>python </li>
+  <li>versione python utilizzata: 3.8</li>
   <li>pipenv</li>
   <p>Installazione: <code>pip3 install pipenv</code></p>
 </ul>
@@ -32,6 +32,14 @@ Clonare la repository nella vostra directory.
 <p><code>pipenv install</code></p>
 
 <h3>Esecuzione</h3>
+<p>Per eseguire il progetto in locale:</p>
+<p><code>mkdir <dir-name></code></p>
+<p>code>cd <dir-name></code></p>
+<p><code>git clone </code></p>
+<p><code></code></p>
+<p><code></code></p>
+<p><code></code></p>
+
 <p>Per poter eseguire il progetto, posizionarsi nella cartella principale del progetto (restaurant) ed eseguire i seguenti comandi:
 <p><code>pipenv shell</code> -> per attivare il virtual enviroment;</p>
 <p><code>python manage.py runserver</code> -> per lanciare il web server.</p> 
