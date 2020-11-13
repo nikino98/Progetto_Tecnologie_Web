@@ -7,6 +7,16 @@ verify_ssl = true
 
 [packages]
 django = "*"
+pillow = "*"
+django-crispy-forms = "*"
+django-jquery = "*"
+django-jquery-ui = "*"
+pyparsing = "*"
+python-dateutil = "*"
+pytz = "*"
+setuptools = "*"
+six = "*"
+sqlparse = "*"
 
 [requires]
 python_version = "3.8"
