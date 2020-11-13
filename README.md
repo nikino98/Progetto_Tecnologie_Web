@@ -49,13 +49,13 @@ Infine cliccare sul link restituito.
 
 <h3>Utenti già presenti</h3>
 <h4>Admin:</h4>
-<p><b>email:</b>admin@gmail.com<p>
-<p><b>password:</b>http://127.0.0.1:8000/<p>
+<p><i>email:</i> admin@gmail.com<p>
+<p><i>password:</i>http://127.0.0.1:8000/<p>
   
 <h4>Ristoratore:</h4>
-<p><b>email:</b>gastone@gmail.com<p>
-<p><b>password:</b>http://127.0.0.1:8000/<p>
+<p><i>email:</i>gastone@gmail.com<p>
+<p><i>password:</i>http://127.0.0.1:8000/<p>
  
 <h4>Utente registrato:</h4>
-<p><b>email:</b>paolo@gmail.com<p>
-<p><b>password:</b>http://127.0.0.1:8000/<p>
+<p><i>email:</i>paolo@gmail.com<p>
+<p><i>password:</i>http://127.0.0.1:8000/<p>
