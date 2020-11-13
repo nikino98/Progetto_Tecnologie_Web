@@ -127,8 +127,10 @@ class ProductModify(UpdateView):
             food.name = form.cleaned_data['name']
             food.description = form.cleaned_data['description']
             food.ingredients.set(form.cleaned_data['ingredients'])
-            if not form.cleaned_data['image']:
+            if form.cleaned_data['image'] is False:
                 food.image = ''
+            elif form.cleaned_data['image'] is None:
+                pass
             else:
                 food.image.delete()
                 food.image = form.cleaned_data['image']
@@ -156,10 +158,12 @@ class DrinkModify(UpdateView):
             drink.name = form.cleaned_data['name']
             drink.description = form.cleaned_data['description']
             drink.litri = form.cleaned_data['litri']
-            drink.image.delete()
-            if not form.cleaned_data['image']:
+            if form.cleaned_data['image'] is False:
                 drink.image = ''
+            elif form.cleaned_data['image'] is None:
+                pass
             else:
+                drink.image.delete()
                 drink.image = form.cleaned_data['image']
             drink.price = form.cleaned_data['price']
             drink.save()
