@@ -11,20 +11,6 @@ from users.models import User, Table, TakeAway, Comment
 
 
 class UserCreateForm(UserCreationForm):
-    #email = forms.EmailField(required=True)
-    #
-    # def __init__(self, *args, **kwargs):
-    #     super().__init__(*args, **kwargs)
-    #     self.fields['first_name'].widget.attrs['placeholder'] = 'Nome'
-    #     self.fields['last_name'].widget.attrs['placeholder'] = 'Cognome'
-    #     self.fields['email'].widget.attrs['placeholder'] = 'example@example.com'
-    #     self.fields['address'].widget.attrs['placeholder'] = 'example@example.com'
-    #     self.fields['password1'].widget.attrs['placeholder'] = 'Scegli la tua password'
-    #     self.fields['password2'].widget.attrs['placeholder'] = 'Ripeti la password scelta'
-    #     self.helper = FormHelper()
-    #     self.helper.add_input(
-    #         Submit('submit', 'Crea un account', css_class='btn btn-success')
-    #     )
 
     class Meta:
         model = User
@@ -54,101 +40,11 @@ class UserCreateForm(UserCreationForm):
         }
 
 
-# UserAddressFormSet = inlineformset_factory(User, Address, fields=(
-#             # 'first_name',
-#             # 'last_name',
-#             # 'email',
-#             # 'tel',
-#             'region',
-#             'province',
-#             'cap',
-#             'city',
-#             'via',
-#             'house_number',
-#             'piano',
-#             'note'
-#             # 'password1',
-#             # 'password2',
-# ))
-
-
-# class AddressForm(forms.ModelForm):
-#     helper = FormHelper()
-#     helper.form_id = 'profile_crispy_form'
-#     helper.form_method = 'POST'
-#     helper.add_input(Submit('submit', 'Salva'))
-#
-#     class Meta:
-#         model = Address
-#         fields = (
-#             'region',
-#             'province',
-#             'cap',
-#             'city',
-#             'via',
-#             'house_number',
-#             'piano',
-#             'note'
-#         )
-
-
-# class ReservationForm(forms.ModelForm):
-#     helper = FormHelper()
-#     helper.form_id = 'table-reservation-crispy'
-#     helper.form_method = 'POST'
-#     helper.layout = Layout(
-#
-#     )
-#     helper.add_input(Submit('submit', 'Salva'))
-#
-#     class Meta:
-#         model = Table
-#         fields = (
-#             'n_people',
-#             'reservation_name',
-#             'reservation_last_name',
-#             'date',
-#         )
-#
-#         labels = {
-#             'n_people': 'Inserisci il numero di persone per la prenotazione:',
-#             'reservation_name': 'Inserisci il nome per la prenotazione:',
-#             'reservation_last_name': 'Inserisci il cognome per la prenotazione',
-#         }
-
-
-# class IntegerRangeField(models.IntegerField):
-#     def __init__(self, *args, **kwargs):
-#         kwargs['min_value'] = 0
-#         kwargs['label'] = 'Inserisci il numero di persone: '
-#         super().__init__(*args, **kwargs)
-#
-#
-
 class ReservationForm(forms.Form):
     n_people = forms.DecimalField(min_value=1, label='Inserisci il numero di persone della prenotazione:')
     reservation_name = forms.CharField(label='Inserisci il nome per la prenotazione: ')
     reservation_last_name = forms.CharField(label='Inserisci il cognome per la prenotazione')
     date = forms.DateTimeField(help_text="Inserisci data e l'ora nel formato YYYY-MM-DD hh:mm")
-
-    # def save(self):
-    #     data = self.cleaned_data
-    #     table = Table(
-    #         n_people=data['n_people'],
-    #         reservation_name=data['reservation_name'],
-    #         reservation_last_name=data['reservation_last_name'],
-    #         date=data['date']
-    #     )
-    #     table.save()
-
-    # class Meta:
-    #     model = Table
-    #     fields = (
-    #         'n_people',
-    #         'reservation_name',
-    #         'reservation_last_name',
-    #         'date',
-    #     )
 
 
 class TakeAwayForm(forms.ModelForm):

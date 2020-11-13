@@ -68,35 +68,6 @@ class ProductModifyForm(forms.ModelForm):
         }
 
 
-# class UpdateProductForm(forms.ModelForm):
-#     price = forms.DecimalField(min_value=0.5)
-#
-#     def __init__(self, *args, **kwargs):
-#         super().__init__(*args, **kwargs)
-#         self.helper = FormHelper()
-#         self.helper.add_input(
-#             Submit('submit', 'Conferma', css_class='btn btn-success')
-#         )
-#
-#     class Meta:
-#         model = Food
-#         fields = (
-#             'image',
-#             'name',
-#             'description',
-#             'ingredients',
-#             'price',
-#         )
-#
-#         labels = {
-#             'image': 'Immagine del piatto',
-#             'name': 'Nome del piatto',
-#             'description': 'Descrizione del piatto',
-#             'ingredients': 'Ingredienti del piatto',
-#             'price': 'Prezzo del piatto',
-#         }
-
-
 class CreateDrink(forms.ModelForm):
     price = forms.DecimalField(min_value=0.5, label='Inserisci il prezzo della bevanda:')
     litri = forms.DecimalField(min_value=0.1, label='Inserisci i litri della bevanda:')

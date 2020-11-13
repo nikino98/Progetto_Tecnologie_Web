@@ -138,11 +138,6 @@ def create_takeaway(request):
                 price_drink += d.price
                 drink_list += str(d.id)+"_"
 
-
-
-            # form.save() andava anche così e con la funzione save nel form
-            #context = {"total": price_food + price_drink}
-            #Table.objects.create(**form.cleaned_data)
             return redirect(reverse_lazy("users:takeaway-redirect", args=(str(price_food + price_drink), food_list,
                                                                           drink_list)))
 

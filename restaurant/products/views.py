@@ -12,12 +12,6 @@ from users.models import User
 from django.core.files import File
 
 
-
-# class ProductListView(ListView):
-#     model = Food
-#     template_name = 'products/food/product_list.html'
-
-
 # decoratore per verificare che gli utenti abbiano i permessi di ristoratori
 def is_restaurateur(function):
     def wrapper(*args, **kwargs):
@@ -55,12 +49,6 @@ def create_food(request):
                 'error': True
             }
             return render(request, 'products/food/product_create.html', context)
-
-        # context = {
-        #     'form': form,
-        # }
-        #
-        # return render(request, 'products/food/product_create.html', context)
     else:
         form = CreateProductForm()
         context = {
