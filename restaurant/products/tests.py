@@ -35,4 +35,7 @@ class Tests_add_product(TestCase):
             data={'name': 'Tagliolini al tartufo', 'ingredients': [self.ingredients.pk], 'price': 18}
         )
         self.assertTrue(Food.objects.filter(name="Tagliolini al tartufo").exists())
-        self.assertEqual(response.status_code, 302) # se il form è stato submittato correttamente
+        self.assertEqual(response.status_code, 302)
+
+
+        # se il form è stato submittato correttamente

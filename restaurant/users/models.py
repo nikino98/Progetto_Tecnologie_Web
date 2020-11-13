@@ -1,4 +1,4 @@
-from django.contrib.auth.base_user import BaseUserManager, AbstractBaseUser
+from django.contrib.auth.models import BaseUserManager, AbstractBaseUser
 from django.contrib.auth.models import PermissionsMixin
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.validators import MinValueValidator, MaxValueValidator, RegexValidator
@@ -23,14 +23,13 @@ class CustomUser(BaseUserManager):
         user.set_password(password)
         user.first_name = first_name
         user.last_name = last_name
-        user.password = password
         user.is_staff = is_staff
         user.is_active = is_active
         user.is_admin = is_admin
-        user.save(using=self.db)
+        user.save(using=self._db)
         return user
 
-    def create_superuser(self, email, first_name, last_name, password):
+    def create_superuser(self, email, first_name, last_name, password=None):
         user = self.create_user(
             email=self.normalize_email(email),
             first_name=first_name,
@@ -40,41 +39,24 @@ class CustomUser(BaseUserManager):
             is_admin=True,
             is_staff=True,
         )
-        user.save(using=self.db)
+        user.save(using=self._db)
         return user
 
 
-# class Address(models.Model):
-#     region = models.CharField(max_length=35)
-#     province = models.CharField(max_length=30)
-#     cap = models.CharField(max_length=5)
-#     city = models.CharField(max_length=50)
-#     via = models.CharField(max_length=50)
-#     house_number = models.CharField(max_length=10)
-#     piano = models.CharField(max_length=30, blank=True)
-#     note = models.TextField(blank=True)
-#
-#     def __str__(self):
-#         return f'{self.cap} - {self.city} - Via/Piazza {self.via} - num. {self.house_number}'
-#
-#     class Meta:
-#         verbose_name_plural = 'Addresses'
-
-
 class User(AbstractBaseUser, PermissionsMixin):
-    email = models.EmailField(max_length=60, unique=True, verbose_name='Email:')
-    first_name = models.CharField(max_length=60, verbose_name='Nome:')
-    last_name = models.CharField(max_length=60, verbose_name='Cognome:')
-    region = models.CharField(max_length=35, verbose_name='Regione:')
-    province = models.CharField(max_length=30, verbose_name='Provincia:')
-    cap = models.CharField(max_length=5, verbose_name='CAP:')
-    city = models.CharField(max_length=50, verbose_name='Città:')
-    via = models.CharField(max_length=50, verbose_name='Via:')
-    house_number = models.CharField(max_length=10, verbose_name='Numero civico:')
-    piano = models.CharField(max_length=30, blank=True, verbose_name='Piano:')
-    note = models.TextField(blank=True, verbose_name='Note:', null=True)
+    email = models.EmailField(max_length=60, unique=True, verbose_name='Email')
+    first_name = models.CharField(max_length=60, verbose_name='Nome')
+    last_name = models.CharField(max_length=60, verbose_name='Cognome')
+    region = models.CharField(max_length=35, verbose_name='Regione', blank=True, null=True)
+    province = models.CharField(max_length=30, verbose_name='Provincia', blank=True, null=True)
+    cap = models.CharField(max_length=5, verbose_name='CAP', blank=True, null=True)
+    city = models.CharField(max_length=50, verbose_name='Città', blank=True, null=True)
+    via = models.CharField(max_length=50, verbose_name='Via', blank=True, null=True)
+    house_number = models.CharField(max_length=10, verbose_name='Numero civico', blank=True, null=True)
+    piano = models.CharField(max_length=30, blank=True, verbose_name='Piano', null=True)
+    note = models.TextField(blank=True, verbose_name='Note', null=True)
     tel_regex = RegexValidator(regex=r'^\+?1?\d{10,10}$', message=('Numero di telefono errato!'))
-    tel = models.CharField(validators=[tel_regex], max_length=10, verbose_name='Telefono:')
+    tel = models.CharField(validators=[tel_regex], max_length=10, verbose_name='Telefono', blank=True, null=True)
     is_admin = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
@@ -111,7 +93,7 @@ class User(AbstractBaseUser, PermissionsMixin):
 # modello per riservare un tavolo
 class Table(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, default=None, null=True, related_name="prenotazioni")
-    n_people = models.DecimalField(max_digits=2, decimal_places=0)
+    n_people = models.PositiveIntegerField()
     reservation_name = models.CharField(max_length=50, default=None)
     reservation_last_name = models.CharField(max_length=50, default=None)
     date = models.DateTimeField(default=None)

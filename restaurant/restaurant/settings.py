@@ -34,6 +34,7 @@ ALLOWED_HOSTS = []
 # Application definition
 # per creare un superuser con le credeziali di default, mettere django.contrib.admin prima
 INSTALLED_APPS = [
+    # 'users.apps.UsersConfig',
     'users',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -44,7 +45,11 @@ INSTALLED_APPS = [
     'crispy_forms',
     'products',
     'offers',
+
 ]
+
+# usa il mio modello per l'autenticazione
+AUTH_USER_MODEL = 'users.User'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -138,8 +143,7 @@ MEDIA_URL = '/media/'
 
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 
-# usa il mio modello per l'autenticazione
-AUTH_USER_MODEL = 'users.User'
+
 LOGIN_URL = 'users:login'
 LOGIN_REDIRECT_URL = 'home'
 

@@ -9,6 +9,8 @@ from .models import Food, Drink, Ingredient
 from .forms import CreateProductForm, CreateDrink, DrinkModifyForm, ProductModifyForm, IngredientAddForm
 from django.contrib import messages
 from users.models import User
+from django.core.files import File
+
 
 
 # class ProductListView(ListView):
@@ -122,15 +124,15 @@ class ProductModify(UpdateView):
             # form.cleaned_data['image'] = request.POST['image']
             # form.save()
             food = get_object_or_404(Food, pk=kwargs.get('pk'))
-            food.name = request.POST['name']
-            food.description = request.POST['description']
+            food.name = form.cleaned_data['name']
+            food.description = form.cleaned_data['description']
             food.ingredients.set(form.cleaned_data['ingredients'])
-            food.image.delete()
             if not form.cleaned_data['image']:
                 food.image = ''
             else:
+                food.image.delete()
                 food.image = form.cleaned_data['image']
-            food.price = request.POST['price']
+            food.price = form.cleaned_data['price']
             food.save()
             return HttpResponseRedirect(reverse_lazy('products:product-list'))
         else:

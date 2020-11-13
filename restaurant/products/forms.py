@@ -98,7 +98,7 @@ class ProductModifyForm(forms.ModelForm):
 
 
 class CreateDrink(forms.ModelForm):
-    price = forms.DecimalField(min_value=0.5, label='Inserisci il prezzo del piatto:')
+    price = forms.DecimalField(min_value=0.5, label='Inserisci il prezzo della bevanda:')
     litri = forms.DecimalField(min_value=0.1, label='Inserisci i litri della bevanda:')
 
     class Meta:
@@ -114,7 +114,7 @@ class CreateDrink(forms.ModelForm):
         labels = {
             'image': "<b>Inserisci l'immagine della bevanda che desideri, altrimenti non inserire nulla",
             'name': 'Inserisci il nome della bevanda',
-            'description': 'Inserisci una descrizione del cibo',
+            'description': 'Inserisci una descrizione della bevanda',
             'price': 'Inserisci il prezzo</b>'
         }
 

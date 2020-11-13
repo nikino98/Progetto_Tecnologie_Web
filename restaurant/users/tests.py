@@ -7,6 +7,7 @@ from products.models import Food, Ingredient, Drink
 from users.models import User, Table, TakeAway
 from django.utils import timezone
 
+
 class Tests_user_profile(TestCase):
 
     def setUp(self):

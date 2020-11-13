@@ -17,8 +17,6 @@ from products.views import is_restaurateur
 from .forms import UserCreateForm, ReservationForm, TakeAwayForm, CommentForm
 from .models import BaseUserManager, Table, User, TakeAway, Review, Comment
 
-tot_table = 100  # numero di coperti
-
 
 def is_client(function):
     def wrapper(*args, **kwargs):
