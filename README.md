@@ -33,8 +33,8 @@ Clonare la repository nella vostra directory.
 
 <h3>Esecuzione</h3>
 <p>Per eseguire il progetto in locale:</p>
-<p><code>mkdir <dir-name></code></p>
-<p>code>cd <dir-name></code></p>
+<p><code>mkdir dir-name</code></p>
+<p>code>cd dir-name</code></p>
 <p><code>git clone https://github.com/nikino98/Progetto_Tecnologie_Web.git</code></p>
 <p><code>cd Progetto_Tecnologie_Web/restaurant/</code></p>
 
