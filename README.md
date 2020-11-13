@@ -36,7 +36,7 @@ Clonare la repository nella vostra directory.
 <p><code>mkdir <dir-name></code></p>
 <p>code>cd <dir-name></code></p>
 <p><code>git clone https://github.com/nikino98/Progetto_Tecnologie_Web.git</code></p>
-<p><code>cd Progetto_Tecnologie_Web/restaurant</code></p>
+<p><code>cd Progetto_Tecnologie_Web/restaurant/</code></p>
 
 <p>Per poter eseguire il progetto, posizionarsi nella cartella principale del progetto (restaurant) ed eseguire i seguenti comandi:
 <p><code>pipenv shell</code> -> per attivare il virtual enviroment;</p>
