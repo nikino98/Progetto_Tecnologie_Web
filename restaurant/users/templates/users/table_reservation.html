@@ -27,6 +27,9 @@
             {% if error %}
                 <div class="alert alert-danger" role="alert">Formato data sbagliato!!</div>
             {% endif %}
+            {% if closed %}
+                <div class="alert alert-danger" role="alert">Il ristorante è chiuso in questo orario!!</div>
+            {% endif %}
         </div>
     <button type="button" class="btn btn-danger" onclick="location.href='../../'"
                 id="cancel-button">Indietro</button>

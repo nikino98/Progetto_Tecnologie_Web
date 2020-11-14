@@ -48,11 +48,19 @@ def table_reserved(request):
                 if request.user.numero_prenotazioni % 15 == 0 and request.user.numero_prenotazioni != 0 and not request.user.restaurateur:   #ogni 15 prenotazioni ho uno sconto
                     form.cleaned_data["discount"] = 15
 
-            t = Table.objects.create(**form.cleaned_data)
-            if not request.user.is_anonymous:
-                t.user = request.user
-            t.save()
-            return redirect(reverse_lazy('home'))
+            if form.cleaned_data['date'].hour > 11 and form.cleaned_data['date'].hour < 15 or \
+                    form.cleaned_data['date'].hour > 18 and form.cleaned_data['date'].hour < 23:
+                t = Table.objects.create(**form.cleaned_data)
+                if not request.user.is_anonymous:
+                    t.user = request.user
+                t.save()
+                return redirect(reverse_lazy('home'))
+            else:
+                context = {
+                    'form': form,
+                    'closed': True
+                }
+                return render(request, 'users/table_reservation.html', context)
         else:
             context = {
                 'form': form,
