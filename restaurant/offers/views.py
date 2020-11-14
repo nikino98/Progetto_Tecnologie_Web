@@ -25,6 +25,9 @@ class CreateOfferDrink(CreateView):
     success_url = reverse_lazy('offers:offers-list')
 
 
+"""
+View che mostra la lista delle offerte per i cibi e i prodotti.
+"""
 @login_required
 def offer_list(request):
     food = OfferFood.objects.all()

@@ -98,6 +98,13 @@ class DeleteDrink(DeleteView):
     success_url = reverse_lazy('products:product-list')
 
 
+"""
+View che permette la modifica dei cibi. Nella post vengono assegnati gli attributi che vengono modificati
+dall'utente: nel campo immagine vengono effettuati due controlli:
+    - se il valore è False, cioè l'immagine viene eliminata, allora viene assegnata una stringa vuota al campo immagine
+    - se il valore è None, cioè non viene eseguita alcuna modifica all'immagine, si passa oltre.
+Infine viene salvato il prodotto.
+"""
 @method_decorator(is_restaurateur, name='dispatch')
 class ProductModify(UpdateView):
     model = Food

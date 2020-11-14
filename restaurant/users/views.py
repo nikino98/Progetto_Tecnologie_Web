@@ -39,6 +39,11 @@ class create_user(CreateView):
     success_url = reverse_lazy('home')
 
 
+"""
+View che permette di riservare un tavolo per un cliente. Quando un utente registrato arriva a 15 prenotazioni,
+gli viene applicato uno sconto del 15%. Negli orari di chiusura, se un utente vuole prenotare, gli viene 
+segnalato un errore. Se l'utente è autenticato, i campi del nominativo sono precompilati.
+"""
 def table_reserved(request):
     if request.method == "POST":
         form = ReservationForm(request.POST)
@@ -78,7 +83,10 @@ def table_reserved(request):
         }
         return render(request, 'users/table_reservation.html', context)
 
-
+"""
+View per la visualizzazione del profilo. Le prenotazioni vengono divise in prenotazioni passate e future rispetto
+la data in cui ci troviamo.
+"""
 @is_client
 def profile_view(request):
     user = request.user
@@ -129,6 +137,10 @@ class UpdateUser(UpdateView):
         return obj
 
 
+"""
+View che permette la creazione di un ordine d'asporto. Vengono create due liste di prodotti che conterrano gli id 
+dei food e dei drink e vengono separate da "_". Vengono poi passate ad un'altra view senza essere salvati.
+"""
 @is_client  # per prenotare d'asporto, l'utente deve essere autenticato, quindi non ha senso farlo fare al ristoratore. Si è deciso di non fare gestire questo aspetto al ristoratore
 def create_takeaway(request):
     if request.method == "POST":
@@ -157,6 +169,10 @@ def create_takeaway(request):
         return render(request, 'users/take_away.html', context)
 
 
+"""
+View che estende quella precendente e che assegna effettivamente i drink e i food nel caso ci fosse una conferma
+da parte dell'utente, facendo un'analisi delle due liste.
+"""
 def takeaway_redirect(request, total="", food_list="", drink_list=""):
     if request.method == 'POST':
         food_list_int = food_list.split("_")
@@ -198,6 +214,9 @@ def review_create_ajax(request):
         return render(request, "users/new_review.html", {"review": review})
 
 
+"""
+View che permette la creazione di un commento all'interno della review e che viene associata all'utente corrispondente.
+"""
 @login_required()
 def comment_create(request, **kwargs):
     if request.method == "POST":
